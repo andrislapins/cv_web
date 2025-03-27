@@ -1,8 +1,7 @@
-
 # From browser available services
 
 | Service      | URL                                            | Description                            |
-|--------------|------------------------------------------------|----------------------------------------|
+| ------------ | ---------------------------------------------- | -------------------------------------- |
 | Frontend     | [http://localhost:3000](http://localhost:3000) | Vite/React/TypeScript frontend service |
 | Backend      | [http://localhost:8080](http://localhost:8080) | Spring Boot backend service            |
 | Grafana      | [http://localhost:3001](http://localhost:3001) | Grafana dashboard service              |
@@ -11,6 +10,8 @@
 | Temporal UI  | [http://localhost:8088](http://localhost:8088) | Temporal UI                            |
 
 ## Setup
+
+### Detect secrets
 
 ```bash
 python3 -m venv .venv
