@@ -1,4 +1,6 @@
-# From browser available services
+# cv_web. WORK IN PROGRESS
+
+## From browser available services
 
 | Service      | URL                                            | Description                            |
 | ------------ | ---------------------------------------------- | -------------------------------------- |
@@ -19,4 +21,10 @@ source .venv/bin/activate
 pip install --upgrade pip setuptools wheel
 pip install --upgrade urllib3 requests
 pip install --upgrade detect-secrets
+```
+
+## Launch
+
+```bash
+clear && docker compose down --volumes --remove-orphans && docker compose -f docker-compose.yml -f docker-compose.temporal.yml -f docker-compose.otel.yml -f docker-compose.grafana.yml up --build
 ```
