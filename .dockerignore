@@ -1,0 +1,14 @@
+
+###################################
+.github
+
+###################################
+# backend
+./cv-web-backend/README.md
+./cv-web-backend/Dockerfile
+
+###################################
+# frontend
+./cv-web-frontend/node_modules/
+./cv-web-frontend/README.md
+./cv-web-frontend/Dockerfile

@@ -1,0 +1,96 @@
+version: "2.3.3"
+
+x-default-logging: &logging
+  driver: "json-file"
+  options:
+    max-size: "5m"
+    max-file: "2"
+    tag: "{{.Name}}"
+
+networks:
+  default:
+    name: cv-web-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+
+services:
+  # ******************
+  # Postgres
+  # ******************
+  postgres:
+    image: postgres:17.3
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+    ports:
+      - 5432
+    volumes:
+      - ./postgres/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./postgres/init-schema.sql:/docker-entrypoint-initdb.d/init-schema.sql
+    healthcheck:
+      test: pg_isready -U "$$POSTGRES_USER" -d "cv_web_db"
+      interval: 1s
+      timeout: 5s
+      retries: 30
+    mem_limit: 512m
+    cpus: 0.75
+    restart: "no"
+    logging: *logging
+
+  # ******************
+  # Backend
+  # ******************
+  backend:
+    image: ${BACKEND_IMAGE_NAME}:${BACKEND_IMAGE_VERSION}
+    container_name: backend
+    build:
+      context: ${BACKEND_DOCKER_CONTEXT}
+      dockerfile: ${BACKEND_DOCKERFILE}
+      cache_from:
+        - ${BACKEND_IMAGE_NAME}:${BACKEND_IMAGE_VERSION}
+    environment:
+      - OTEL_SERVICE_NAME=cv-web-backend
+      - OTEL_RESOURCE_ATTRIBUTES="service=cv-web-backend,env=dev"
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://192.168.1.10:4317
+      - OTEL_LOGS_EXPORTER=none
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_TRACES_EXPORTER=otlp
+    ports:
+      - 8080:8080
+    volumes:
+      # - ./postgres/certs/root.crt:/app/ssl/server.crt:ro
+      - ./logs:/app/logs
+    mem_limit: 1g
+    cpus: 0.75
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      otel-collector:
+        condition: service_started
+    logging: *logging
+
+  # ******************
+  # Frontend
+  # ******************
+  frontend:
+    image: ${FRONTEND_IMAGE_NAME}:${FRONTEND_IMAGE_VERSION}
+    container_name: frontend
+    build:
+      context: ${FRONTEND_DOCKER_CONTEXT}
+      dockerfile: ${FRONTEND_DOCKERFILE}
+      cache_from:
+        - ${FRONTEND_IMAGE_NAME}:${FRONTEND_IMAGE_VERSION}
+    ports:
+      - 3000:3000
+    mem_limit: 512m
+    cpus: 0.75
+    restart: "no"
+    depends_on:
+      backend:
+        condition: service_started
+    logging: *logging

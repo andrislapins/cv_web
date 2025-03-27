@@ -1,0 +1,18 @@
+
+dirs:
+  - .
+
+excludedFiles:
+  - ./README.md
+
+ignorePatterns:
+  - pattern: "^http://localhost:8080"
+  - pattern: "^https://calendar.google.com/calendar"
+
+aliveStatusCodes:
+  - 200
+  - 429
+
+useGitIgnore: true
+
+modifiedFilesOnly: false

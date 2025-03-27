@@ -1,0 +1,30 @@
+
+services:
+  # ******************
+  # OpenTelemetry Collector
+  # ******************
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.121.0
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector-config.yml"]
+    volumes:
+      - ./otel/otel-collector.yml:/etc/otel-collector-config.yml
+      # - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./logs:/var/log
+    ports:
+      - "4317:4317"    # OTLP gRPC
+      - "4318:4318"    # OTLP HTTP
+      - "8888"         # Internal Prometheus metrics
+      # - "55679:55679"  # zpages
+    # healthcheck:
+    #   test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:55679/debug/servicez"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 5
+    networks:
+      default:
+        ipv4_address: 192.168.1.10
+    depends_on:
+      - tempo
+      - loki
+      - prometheus

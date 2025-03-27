@@ -1,0 +1,14 @@
+.gitignore
+.npmignore
+api.ts
+apis/education-controller-api.ts
+apis/job-controller-api.ts
+apis/test-controller-api.ts
+base.ts
+common.ts
+configuration.ts
+git_push.sh
+index.ts
+models/education.ts
+models/index.ts
+models/job.ts

@@ -1,0 +1,9 @@
+
+.vscode/
+.venv/
+
+.env
+TODO.txt
+
+logs/*.log.gz
+postgres/certs/

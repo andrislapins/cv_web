@@ -1,0 +1,12 @@
+groups:
+  - name: cv-web instance down
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+          service: backend
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down"
+          description: "The instance {{ $labels.instance }} has been down for more than 30 seconds."

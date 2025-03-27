@@ -1,0 +1,71 @@
+
+receivers:
+  otlp/cv-web-backend:
+    protocols:
+      grpc:
+        endpoint: 192.168.1.10:4317
+      http:
+        endpoint: 192.168.1.10:4318
+  filelog/cv-web-backend:
+    include: [ "/var/log/app-json.log" ]
+    operators:
+      - type: json_parser
+        id: parse-json
+        parse_to: attributes
+      - type: move
+        id: move-service-name
+        from: attributes.service_name_custom
+        to: resource.service_name_custom
+  # prometheus/internal:
+  #   config:
+  #     scrape_configs:
+  #       - job_name: 'otel-collector'
+  #         scrape_interval: 10s
+  #         static_configs:
+  #           - targets: ['192.168.1.10:8888']
+
+processors:
+  batch:
+    send_batch_max_size: 1000
+    send_batch_size: 100
+    timeout: 10s
+
+  # resource/override-instance:
+  #   attributes:
+  #     - action: insert
+  #       key: service.instance.id
+  #       value: "backend:8080"
+
+exporters:
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+  # prometheusremotewrite/prometheus:
+  #   endpoint: "http://prometheus:9090/api/v1/write"
+  otlp/tempo:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+
+# extensions:
+#   zpages:
+
+service:
+  telemetry:
+    logs:
+      level: "info"
+    metrics:
+      address: 192.168.1.10:8888
+  pipelines:
+    traces:
+      receivers: [otlp/cv-web-backend]
+      processors: [batch]
+      exporters: [otlp/tempo]
+    # metrics:
+    #   receivers: [prometheus/internal]
+    #   # receivers: [otlp/cv-web-backend, prometheus/internal]
+    #   processors: [batch]
+    #   exporters: [prometheusremotewrite/prometheus]
+    logs:
+      receivers: [filelog/cv-web-backend]
+      processors: [batch]
+      exporters: [otlphttp/loki]

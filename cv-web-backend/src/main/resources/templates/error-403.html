@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>403 Forbidden</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        a {
+            display: block;
+            margin-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Oops!</h1>
+    <p>Sorry. Forbidden.</p>
+
+    <a href="/actuator/prometheus">Try listing JVM metrics</a>
+    <a href="/test">A dummy Junit test endpoint</a>
+    <a href="/swagger-ui.html">Backend Swagger/OpenAPI docs</a> 
+
+    <a href="/api/v1/jobs">Try listing jobs</a>
+    <a href="/api/v1/jobs/current">Try listing current job</a>
+
+    <a href="/api/v1/educations">Try listing educations</a>
+    <a href="/api/v1/educations/current">Try listing current education</a>
+
+    <h2>Available Services</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>URL</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Frontend</td>
+                <td><a href="http://localhost:3000">http://localhost:3000</a></td>
+                <td>Vite/React/TypeScript frontend service</td>
+            </tr>
+            <tr>
+                <td>Backend</td>
+                <td><a href="http://localhost:8080">http://localhost:8080</a></td>
+                <td>Spring Boot backend service</td>
+            </tr>
+            <tr>
+                <td>Grafana</td>
+                <td><a href="http://localhost:3001">http://localhost:3001</a></td>
+                <td>Grafana dashboard service</td>
+            </tr>
+            <tr>
+                <td>Prometheus</td>
+                <td><a href="http://localhost:9090">http://localhost:9090</a></td>
+                <td>Prometheus metrics service</td>
+            </tr>
+            <tr>
+                <td>AlertManager</td>
+                <td><a href="http://localhost:9093">http://localhost:9093</a></td>
+                <td>Prometheus AlertManager service</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
