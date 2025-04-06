@@ -4,6 +4,11 @@ metadata:
   name: {{ include "cv-web-frontend.fullname" . }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    cert-manager.io/acme-challenge-type: dns01
+    cert-manager.io/cluster-issuer: "cloudflare-issuer"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "80.89.77.74/32"
 spec:
   rules:
     - host: {{ .Values.ingress.host }}
