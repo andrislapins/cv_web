@@ -34,10 +34,10 @@ jobs:
 
       - name: Package Helm Charts
         run: |
-          helm package helm/cv-web-backend
-          helm package helm/cv-web-frontend
+          helm package cv-web-backend
+          helm package cv-web-frontend
 
       - name: Push Helm charts to GHCR
         run: |
-          helm push helm/cv-web-backend-*.tgz ghcr.io/andrislapins/helm-charts
-          helm push helm/cv-web-frontend-*.tgz ghcr.io/andrislapins/helm-charts
+          helm push cv-web-backend-*.tgz ghcr.io/andrislapins/helm-charts
+          helm push cv-web-frontend-*.tgz ghcr.io/andrislapins/helm-charts
