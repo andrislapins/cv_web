@@ -11,6 +11,15 @@ jobs:
   helm-push:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    defaults:
+      run:
+        working-directory: helm
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
