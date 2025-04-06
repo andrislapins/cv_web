@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cv-web-backend-repo-prod-app
+  name: cv-web-backend-prod
   namespace: argo-cd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
@@ -14,14 +14,18 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: ghcr.io/andrislapins
-    path: helm-charts
+    repoURL: ghcr.io/andrislapins/helm-charts
     chart: cv-web-backend
     targetRevision: 0.0.6
     helm:
-      valueFiles:
-        - ../cv-web-backend-values.yaml
+      values: |
+        image:
+          tag: "latest"
+        ingress:
+          host: prod-backend.andrefeuille.com
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
