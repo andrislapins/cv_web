@@ -19,7 +19,7 @@ spec:
     targetRevision: 0.0.6
     helm:
       valueFiles:
-        - ../cv-web-backend-values.yaml
+        - cv-web-backend-values.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
