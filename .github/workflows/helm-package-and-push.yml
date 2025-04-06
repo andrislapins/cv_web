@@ -1,6 +1,7 @@
 name: Helm Package and Push
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
