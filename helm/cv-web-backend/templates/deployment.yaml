@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cv-web-backend.fullname" . }}
+  labels:
+    app: {{ include "cv-web-backend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "cv-web-backend.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "cv-web-backend.name" . }}
+    spec:
+      containers:
+        - name: {{ include "cv-web-backend.name" . }}
+          image: "ghcr.io/andrislapins/cv-web-backend:{{ .Values.image.version }}"
+          ports:
+            - containerPort: 8080

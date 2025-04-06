@@ -1,0 +1,6 @@
+image:
+  version: "latest"
+
+ingress:
+  host: "frontend.andrefeuille.com"
+  

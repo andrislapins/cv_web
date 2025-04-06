@@ -1,0 +1,5 @@
+image:
+  version: "latest"
+
+ingress:
+  host: "prod-backend.andrefeuille.com"
