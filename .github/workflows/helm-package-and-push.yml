@@ -1,0 +1,41 @@
+name: Helm Package and Push
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "helm/**"
+jobs:
+  helm-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: helm/chart-releaser-action@v1
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+          helm version
+
+      - name: Install GitHub CLI
+        run: |
+          curl -fsSL https://github.com/cli/cli/releases/download/v2.7.0/gh_2.7.0_linux_amd64.tar.gz | tar -xz
+          sudo mv gh_*/bin/gh /usr/local/bin
+
+      - name: Log in to GitHub Container Registry
+        run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io --username ${{ github.actor }} --password-stdin
+
+      - name: Package Helm Charts
+        run: |
+          helm package helm/cv-web-backend
+          helm package helm/cv-web-frontend
+
+      - name: Push Helm charts to GHCR
+        run: |
+          helm push helm/cv-web-backend-*.tgz ghcr.io/andrislapins/helm-charts
+          helm push helm/cv-web-frontend-*.tgz ghcr.io/andrislapins/helm-charts
