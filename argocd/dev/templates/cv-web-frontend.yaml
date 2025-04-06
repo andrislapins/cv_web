@@ -18,8 +18,11 @@ spec:
     chart: cv-web-frontend
     targetRevision: 0.0.6
     helm:
-      valueFiles:
-        - cv-web-frontend-values.yaml
+      values: |
+        image:
+          tag: "latest"
+        ingress:
+          host: dev-frontend.andrefeuille.com
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
