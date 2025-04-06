@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cv-web-backend-repo-dev-app
+  name: cv-web-backend-dev
   namespace: argo-cd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
