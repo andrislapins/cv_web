@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: ghcr.io/andrislapins/helm-charts
     chart: cv-web-backend
-    targetRevision: 0.0.6
+    targetRevision: 0.0.7
     helm:
       values: |
         image:
