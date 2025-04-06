@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cv-web-backend-repo-prod-app
+  namespace: argo-cd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cv-web-prod-ns
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: ghcr.io/andrislapins
+    path: helm-charts
+    chart: cv-web-backend
+    targetRevision: 0.0.6
+    helm:
+      valueFiles:
+        - ../cv-web-backend-values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
