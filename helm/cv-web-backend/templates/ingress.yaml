@@ -20,4 +20,4 @@ spec:
               service:
                 name: {{ include "cv-web-backend.fullname" . }}
                 port:
-                  number: http
+                  name: http
