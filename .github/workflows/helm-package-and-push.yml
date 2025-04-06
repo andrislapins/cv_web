@@ -39,5 +39,5 @@ jobs:
 
       - name: Push Helm charts to GHCR
         run: |
-          helm push cv-web-backend-*.tgz ghcr.io/andrislapins/helm-charts
-          helm push cv-web-frontend-*.tgz ghcr.io/andrislapins/helm-charts
+          helm push cv-web-backend-*.tgz oci://ghcr.io/andrislapins/helm-charts
+          helm push cv-web-frontend-*.tgz oci://ghcr.io/andrislapins/helm-charts
