@@ -1,18 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "cv-web-backend.fullname" . }}
+  name: { { include "cv-web-backend.fullname" . } }
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: { { .Values.ingress.host } }
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ include "cv-web-backend.fullname" . }}
+                name: { { include "cv-web-backend.fullname" . } }
                 port:
-                  number: 80
+                  number: http

@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cv-web-backend.fullname" . }}
+  name: { { include "cv-web-backend.fullname" . } }
 spec:
   ports:
-    - port: 80
-      targetPort: 8080
+    - name: http
+      port: 80
+      targetPort: http
   selector:
-    app: {{ include "cv-web-backend.name" . }}
+    app: { { include "cv-web-backend.name" . } }
