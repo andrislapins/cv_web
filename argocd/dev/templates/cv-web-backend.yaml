@@ -17,9 +17,9 @@ spec:
     repoURL: oci://ghcr.io/andrislapins/helm-charts
     chart: cv-web-backend
     targetRevision: 0.0.6
-    # helm:
-    #   valueFiles:
-    #     - ../cv-web-backend-values.yaml
+    helm:
+      valueFiles:
+        - ../cv-web-backend-values.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
