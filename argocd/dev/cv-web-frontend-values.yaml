@@ -1,5 +1,0 @@
-image:
-  version: "latest"
-
-ingress:
-  host: "dev-frontend.andrefeuille.com"
