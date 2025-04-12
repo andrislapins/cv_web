@@ -1,4 +1,4 @@
-name: Promote from DEV to PROD
+name: Promote Images from DEV to PROD
 
 on:
   workflow_dispatch:
