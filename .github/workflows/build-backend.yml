@@ -1,4 +1,4 @@
-name: Build and Push Backend
+name: Backend Build and Push
 
 on:
   workflow_dispatch:
@@ -141,8 +141,6 @@ jobs:
       - name: Update and push to ArgoCD configs
         run: |
           cd configs
-          pwd
-          tree -L 2
           ./helm/helm-values-bump.py \
             -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
@@ -151,7 +149,6 @@ jobs:
           git config --global user.email "hetzner-cloud-cv-web-gh-app[bot]@users.noreply.github.com"
           git config --global user.name "hetzner-cloud-cv-web-gh-app[bot]"
           git add argocd/dev/values.yaml
-          
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

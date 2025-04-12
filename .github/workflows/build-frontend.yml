@@ -1,4 +1,4 @@
-name: Build and Push Frontend
+name: Frontend Build and Push
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "frontend/**"
+      - "cv-web-frontend/**"
 
 jobs:
   build-and-push:
@@ -19,11 +19,51 @@ jobs:
 
     defaults:
       run:
-        working-directory: frontend
+        working-directory: cv-web-frontend
+
+    outputs:
+      BUILD_JOB_IMAGE_TAG: "${{ steps.time.outputs.formattedTime }}00-${{ steps.sha.outputs.sha_short }}"
 
     steps:
-      - name: Checkout code
+      - name: Prepare - Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup - Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup - Caching restore
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.gradle/notifications
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Setup - Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+          cache-disabled: true # Disable built-in caching since actions/cache are used
+
+      - name: Build frontend
+        run: |
+          ./gradlew build -x test --build-cache
+
+      - name: Store reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
+          retention-days: 7
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -32,13 +72,87 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get current time
+        id: time
+        uses: josStorer/get-current-time@v2.1.2
+        with:
+          format: YYYY-MM-DD-HH
+
+      - name: Set Git SHA
+        id: sha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+      - name: Build and Push Image Multi-Arch Image
+        env:
+          IMAGE_URL: ghcr.io/${{ github.repository_owner }}/cv-web-frontend
+          IMAGE_TAG: ${{ steps.time.outputs.formattedTime }}00-${{ steps.sha.outputs.sha_short }}
+        run: |
+          docker buildx create --use
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -t "$IMAGE_URL:$IMAGE_TAG" \
+            -t "$IMAGE_URL:latest" \
+            --push .
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    env:
+      BUILD_JOB_IMAGE_TAG: "${{ needs.build-and-push.outputs.BUILD_JOB_IMAGE_TAG }}"
+      IMAGE_TAG_KEY: "frontendImageTag"
+
+    # https://dev.to/dtinth/authenticating-as-a-github-app-in-a-github-actions-workflow-27co
+    # https://dtinth.github.io/obtain-github-app-installation-access-token/
+    steps:
+      - name: Obtain a GitHub App Installation Access Token
+        id: github-app-token
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.GH_APP_CREDENTIALS_TOKEN }})"
+          echo "::add-mask::$TOKEN"
+          echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: Use the obtained token
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $TOKEN" \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -d '{"context":"test","state":"success"}' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA"
+
+      - name: Prepare - Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare - Checkout ArgoCD configs repo
+        uses: actions/checkout@v4
         with:
-          context: ./cv-web-frontend
-          file: ./cv-web-frontend/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/cv-web-frontend:latest
+          repository: andrislapins/cv_web
+          token: ${{ env.TOKEN }}
+          path: configs
+
+      - name: Update and push to ArgoCD configs
+        run: |
+          cd configs
+          ./helm/helm-values-bump.py \
+            -f argocd/dev/values.yaml \
+            -i ${BUILD_JOB_IMAGE_TAG} \
+            -k ${IMAGE_TAG_KEY}
+          git status
+          git config --global user.email "hetzner-cloud-cv-web-gh-app[bot]@users.noreply.github.com"
+          git config --global user.name "hetzner-cloud-cv-web-gh-app[bot]"
+          git add argocd/dev/values.yaml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git remote set-url origin https://x-access-token:${{ env.TOKEN }}@github.com/andrislapins/cv_web.git
+            git commit -m "[automated version bump]: FRONTEND DEV to $BUILD_JOB_IMAGE_TAG"
+            git push
+          fi
