@@ -1,6 +1,6 @@
 general:
-  backendHelmChartVersion: 0.0.14
-  frontendHelmChartVersion: 0.0.14
+  backendHelmChartVersion: 0.0.15
+  frontendHelmChartVersion: 0.0.15
   backendImageTag: 2025-04-12-1900-4a1c914
   backendIngressURL: backend-dev.andrefeuille.com
   frontendImageTag: 2025-04-12-1900-3c1fcbb
