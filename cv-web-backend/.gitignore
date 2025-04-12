@@ -36,3 +36,6 @@ build/
 bin/
 build/
 .gradle/
+
+src/main/java/com/andrefeuille/cv_web_backend/stripe/
+src/main/java/com/andrefeuille/cv_web_backend/mailgun/
