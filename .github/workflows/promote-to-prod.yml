@@ -46,6 +46,5 @@ jobs:
           else
             git remote set-url origin https://x-access-token:${{ env.TOKEN }}@github.com/andrislapins/cv_web.git
             git commit -m '[version bump]: for PROD'
-            git status
             git push
           fi

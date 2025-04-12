@@ -30,5 +30,4 @@ public class CvWebBackendApplication {
     public void onReady() {
         log.info("✅ cv-web-backend is ready to accept HTTP requests!");
     }
-
 }
