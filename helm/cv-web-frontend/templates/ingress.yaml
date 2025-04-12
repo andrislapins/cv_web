@@ -3,9 +3,9 @@ kind: Ingress
 metadata:
   name: {{ include "cv-web-frontend.fullname" . }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.general.certManagerIssuer }}
-    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.general.nginxIpWhitelist }}
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: {{ .Values.general.cloudflareProxied }}
+    cert-manager.io/cluster-issuer: "{{ .Values.general.certManagerIssuer }}"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "{{ .Values.general.nginxIpWhitelist }}"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "{{ .Values.general.cloudflareProxied }}"
     external-dns.alpha.kubernetes.io/access: public
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
