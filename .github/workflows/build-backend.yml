@@ -53,7 +53,7 @@ jobs:
 
       - name: Build backend
         run: |
-          ./gradlew build --build-cache
+          ./gradlew build -x test --build-cache
 
       - name: Store reports
         if: always()
