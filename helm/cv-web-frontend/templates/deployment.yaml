@@ -19,5 +19,4 @@ spec:
         - name: {{ include "cv-web-frontend.name" . }}
           image: "ghcr.io/andrislapins/cv-web-frontend:{{ .Values.general.frontendImageTag }}"
           ports:
-            - name: http
-              containerPort: 3000
+            - containerPort: 3000
