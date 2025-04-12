@@ -1,4 +1,4 @@
-backendImageTag: "latest"
+backendImageTag:  2025-04-12-1900-4a1c914
 backendIngressURL: backend-prod.andrefeuille.com
-frontendImageTag: 2025-04-12-1900-57e0ad2
+frontendImageTag:  2025-04-12-1900-3c1fcbb
 frontendIngressURL: frontend-prod.andrefeuille.com
