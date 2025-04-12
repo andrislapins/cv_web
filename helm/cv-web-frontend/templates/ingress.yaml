@@ -22,3 +22,7 @@ spec:
                 name: {{ include "cv-web-frontend.fullname" . }}
                 port:
                   name: http
+  tls:
+    - hosts:
+        - {{ .Values.general.frontendIngressURL }}
+      secretName: {{ .Values.general.frontendIngressURL }}-tls
