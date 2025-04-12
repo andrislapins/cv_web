@@ -5,5 +5,12 @@
 .env
 TODO.txt
 
-logs/*.log.gz
+logs/
 postgres/certs/
+
+postgres/
+temporal/
+kubespray
+hetzner/
+cv-web-backend/
+cv-web-backend/

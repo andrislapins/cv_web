@@ -1,0 +1,52 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>false</withJansi> <!-- Whether to enable Jansi color-code support for Windows -->
+        <encoder>
+            <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) trace_id=%X{trace_id} span_id=%X{span_id} |%X{user}| %magenta(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/app/logs/app-json.log</file>
+        <!-- <append>true</append> -->
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- Roll when size > 10MB or once per day -->
+            <fileNamePattern>/app/logs/app-json.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                            "service_name_custom": "cv-web-backend-service",
+                            "traceId": "%X{trace_id}",
+                            "spanId": "%X{span_id}",
+                            "level": "%level",
+                            "logger": "%logger{36}",
+                            "message": "%msg",
+                            "thread": "%thread",
+                            "user": "%X{user}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="JSON_FILE"/>
+    </root>
+
+    <logger name="com.andrefeuille.cv-web-backend" level="INFO"/>
+    <logger name="org.springframework.web" level="INFO"/>
+</configuration>

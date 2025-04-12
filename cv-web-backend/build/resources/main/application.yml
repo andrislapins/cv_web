@@ -1,0 +1,71 @@
+spring:
+  # autoconfigure:
+  #   exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  application:
+    name: cv-web-backend
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/cv_web_db
+    username: app_user
+    password: password # pragma: allowlist secret
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 10000
+      max-lifetime: 30000
+      connection-timeout: 2000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: "cv_web_schema"
+        format_sql: true
+    database: postgresql
+    open-in-view: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    schemas: "cv_web_schema"
+    user: "app_user"
+    password: "password" # pragma: allowlist secret
+    baseline-on-migrate: true
+    baseline-version: 0
+    baseline-description: "init"
+
+# logging:
+#   file: /app/logs/app.log
+#   level:
+#     org:
+#       hibernate: INFO
+#       springframework:
+#         web: INFO
+
+server:
+  error:
+    path: /error-spring
+    whitelabel:
+      enabled: false
+  tomcat:
+    threads:
+      max: 32
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+    prometheus:
+      access: read-only
+
+temporal:
+  target: temporal:7233
+
+mailgun:
+  # api-key: key-xxxxxxxxxxxxxxxxxxxxxxxxxx
+  domain: sandbox9e4aa3642249478f927d040580c51427.mailgun.org
+  from: "Mailgun Sandbox <postmaster@sandbox9e4aa3642249478f927d040580c51427.mailgun.org>"
