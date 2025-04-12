@@ -1,0 +1,17 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cv-web-prod-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: argo-cd-prod
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: argocd/prod
+    repoURL: https://github.com/andrislapins/cv_web.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}

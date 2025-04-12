@@ -16,13 +16,11 @@ spec:
   source:
     repoURL: ghcr.io/andrislapins/helm-charts
     chart: cv-web-backend
-    targetRevision: 0.0.10
+    targetRevision: "{{ .Values.backendHelmChartVersion }}"
     helm:
-      values: |
-        image:
-          tag: "latest"
-        ingress:
-          host: prod-backend.andrefeuille.com
+      valuesObject:
+        backendImageTag: "{{ .Values.backendImageTag }}"
+        backendIngressURL: "{{ .Values.backendIngressURL }}"
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
