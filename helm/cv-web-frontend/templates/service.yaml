@@ -5,7 +5,8 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 80
-      targetPort: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
   selector:
     app: {{ include "cv-web-frontend.name" . }}

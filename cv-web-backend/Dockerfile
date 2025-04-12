@@ -1,7 +1,7 @@
 FROM eclipse-temurin:17-jre
 
 ENV APP_PORT="8080"
-ENV USER=backend
+ENV USER="backend"
 
 RUN groupadd -g 35000 ${USER} && useradd -u 35000 -g ${USER} -d /app -m -s /bin/bash ${USER}
 USER ${USER}
