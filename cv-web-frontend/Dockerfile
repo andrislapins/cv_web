@@ -1,9 +1,13 @@
+###
+###
+###
+
 FROM node:22 as build
 
 ENV APP_USER="app_user"
-ENV APP_USER_HOME="/home/$APP_USER"
-ENV APP_HOME="/home/app_user/app"
-ENV APP_GROUP="application_service_group"
+ENV APP_USER_HOME="/home/${APP_USER}"
+ENV APP_HOME="/home/${APP_USER}/app"
+ENV APP_GROUP="${APP_USER}_group"
 
 RUN addgroup --system --gid 35001 $APP_GROUP && \
     adduser --system --ingroup $APP_GROUP -u 35001 --shell /bin/bash --home $APP_USER_HOME $APP_USER && \
@@ -18,12 +22,16 @@ RUN ls -al /build && npm install
 
 RUN npm run build
 
+###
+###
+###
+
 FROM nginx:stable-alpine
 
-ENV APP_USER=app_user
-ENV APP_USER_HOME="/home/$APP_USER"
-ENV APP_HOME="/home/app_user/app"
-ENV APP_GROUP="application_service_group"
+ENV APP_USER="app_user"
+ENV APP_USER_HOME="/home/${APP_USER}"
+ENV APP_HOME="/home/${APP_USER}/app"
+ENV APP_GROUP="${APP_USER}_group"
 
 RUN apk add --no-cache shadow && \
     addgroup -g 35001 $APP_GROUP && \
