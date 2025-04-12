@@ -10,10 +10,12 @@ spec:
   selector:
     matchLabels:
       app: {{ include "cv-web-frontend.name" . }}
+      name: frontend
   template:
     metadata:
       labels:
         app: {{ include "cv-web-frontend.name" . }}
+        name: frontend
     spec:
       containers:
         - name: {{ include "cv-web-frontend.name" . }}
