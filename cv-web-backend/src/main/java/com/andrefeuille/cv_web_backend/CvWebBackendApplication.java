@@ -23,7 +23,7 @@ public class CvWebBackendApplication {
 
 	@PostConstruct
 	public void logStartup() {
-		log.info("✅ cv-web-backend is up and running, ready to accept requests.########");
+		log.info("✅ cv-web-backend is up and running, ready to accept requests.#########");
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
