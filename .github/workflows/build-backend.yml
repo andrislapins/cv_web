@@ -111,6 +111,8 @@ jobs:
       IMAGE_TAG_KEY: "backendImageTag"
 
     steps:
+      # https://dev.to/dtinth/authenticating-as-a-github-app-in-a-github-actions-workflow-27co
+      # https://dtinth.github.io/obtain-github-app-installation-access-token/
       - name: Prepare - Get GitHub App token and Update status
         id: github-app-token
         run: |
@@ -138,7 +140,7 @@ jobs:
           pwd
           tree .
           ./helm/helm-values-bump.py \
-            -f ./dev/values.yaml \
+            -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
             -k ${IMAGE_TAG_KEY}
           cd argocd/configs/argocd
