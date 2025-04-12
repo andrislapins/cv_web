@@ -140,7 +140,6 @@ jobs:
 
       - name: Update and push to ArgoCD configs
         run: |
-          chmod +x ./helm/helm-values-bump.py
           ./helm/helm-values-bump.py \
             -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
