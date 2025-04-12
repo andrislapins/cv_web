@@ -6,11 +6,11 @@ metadata:
     cert-manager.io/cluster-issuer: "{{ .Values.general.certManagerIssuer }}"
     nginx.ingress.kubernetes.io/whitelist-source-range: "{{ .Values.general.nginxIpWhitelist }}"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "{{ .Values.general.cloudflareProxied }}"
-    external-dns.alpha.kubernetes.io/access: public
-    cert-manager.io/acme-challenge-type: dns01
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    # external-dns.alpha.kubernetes.io/access: public
+    # cert-manager.io/acme-challenge-type: dns01
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/proxy-body-size: 10m
 spec:
   rules:
     - host: {{ .Values.general.frontendIngressURL }}
