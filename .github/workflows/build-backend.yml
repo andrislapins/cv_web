@@ -154,7 +154,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git remote set-url origin https://x-access-token:${{ steps.github-app-token.outputs.token }}@github.com/andrislapins/cv_web.git
+            git remote set-url origin https://x-access-token:${{ env.TOKEN }}@github.com/andrislapins/cv_web.git
             git commit -m "[automated version bump]: BACKEND DEV to $BUILD_JOB_IMAGE_TAG"
             git push
           fi
