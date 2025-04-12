@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: {{ include "cv-web-frontend.fullname" . }}
   annotations:
-    # cert-manager.io/cluster-issuer: "{{ .Values.general.certManagerIssuer }}"
+    cert-manager.io/cluster-issuer: "{{ .Values.general.certManagerIssuer }}"
     nginx.ingress.kubernetes.io/whitelist-source-range: "{{ .Values.general.nginxIpWhitelist }}"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "{{ .Values.general.cloudflareProxied }}"
     # external-dns.alpha.kubernetes.io/access: public
@@ -23,7 +23,7 @@ spec:
                 name: {{ include "cv-web-frontend.fullname" . }}
                 port:
                   number: 80
-  # tls:
-  #   - hosts:
-  #       - {{ .Values.general.frontendIngressURL }}
-  #     secretName: {{ .Values.general.frontendIngressURL }}-tls
+  tls:
+    - hosts:
+        - {{ .Values.general.frontendIngressURL }}
+      secretName: {{ .Values.general.frontendIngressURL }}-tls
