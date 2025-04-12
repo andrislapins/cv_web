@@ -140,14 +140,13 @@ jobs:
 
       - name: Update and push to ArgoCD configs
         run: |
-           cd configs
-           pwd
-           tree .
+          cd configs
+          pwd
+          tree -L 2
           ./helm/helm-values-bump.py \
             -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
             -k ${IMAGE_TAG_KEY}
-          # cd argocd/configs/argocd
           git status
           git config --global user.email "hetzner-cloud-cv-web-gh-app[bot]@users.noreply.github.com"
           git config --global user.name "hetzner-cloud-cv-web-gh-app[bot]"
