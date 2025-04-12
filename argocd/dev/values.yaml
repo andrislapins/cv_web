@@ -1,4 +1,4 @@
 backendImageTag: 2025-04-12-1900-57e0ad2
 backendIngressURL: backend-dev.andrefeuille.com
-frontendImageTag: 2025-04-12-1900-57e0ad2
+frontendImageTag: 2025-04-12-1900-c041c20
 frontendIngressURL: frontend-dev.andrefeuille.com
