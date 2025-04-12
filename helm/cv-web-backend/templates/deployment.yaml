@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: {{ include "cv-web-backend.name" . }}
-          image: "ghcr.io/andrislapins/cv-web-backend:{{ .Values.image.version }}"
+          image: "ghcr.io/andrislapins/cv-web-backend:{{ .Values.general.backendImageTag }}"
           ports:
             - name: http
               containerPort: 8080

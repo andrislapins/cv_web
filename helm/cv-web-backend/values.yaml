@@ -1,5 +1,6 @@
-image:
-  version: "latest"
-
-ingress:
-  host: "backend.andrefeuille.com"
+general:
+  backendImageTag: latest
+  backendIngressURL: backend-env.andrefeuille.com
+  certManagerIssuer: "dummy-issuer"
+  nginxIpWhitelist: "172.16.0.101/32, 172.16.0.102/32, 172.16.0.103/32"
+  cloudflareProxied: "false"

@@ -16,11 +16,13 @@ spec:
   source:
     repoURL: ghcr.io/andrislapins/helm-charts
     chart: cv-web-frontend
-    targetRevision: "{{ .Values.frontendHelmChartVersion }}"
+    targetRevision: "{{ .Values.general.frontendHelmChartVersion }}"
     helm:
       valuesObject:
-        frontendImageTag: "{{ .Values.frontendImageTag }}"
-        frontendIngressURL: "{{ .Values.frontendIngressURL }}"
+        general:
+        {{- range $key, $value := .Values.general }}
+          {{ $key }}: {{ $value }}
+        {{- end }}
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

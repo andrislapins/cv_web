@@ -1,6 +1,10 @@
-backendHelmChartVersion: 0.0.10
-frontendHelmChartVersion: 0.0.10
-backendImageTag:  2025-04-12-1900-4a1c914
-backendIngressURL: backend-prod.andrefeuille.com
-frontendImageTag:  2025-04-12-1900-3c1fcbb
-frontendIngressURL: frontend-prod.andrefeuille.com
+general:
+  backendHelmChartVersion: 0.0.10
+  frontendHelmChartVersion: 0.0.10
+  backendImageTag:  2025-04-12-1900-4a1c914
+  backendIngressURL: backend-prod.andrefeuille.com
+  frontendImageTag:  2025-04-12-1900-3c1fcbb
+  frontendIngressURL: frontend-prod.andrefeuille.com
+  certManagerIssuer: "cloudflare-issuer"
+  nginxIpWhitelist: "80.89.77.186/32, 80.89.79.192/32, 95.216.197.156/32 65.109.162.225/32 157.180.30.61/32 172.16.0.101/32 172.16.0.102/32 172.16.0.103/32"
+  cloudflareProxied: "false"

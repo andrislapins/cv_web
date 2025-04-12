@@ -45,6 +45,6 @@ jobs:
             echo "No changes to commit"
           else
             git remote set-url origin https://x-access-token:${{ env.TOKEN }}@github.com/andrislapins/cv_web.git
-            git commit -m '[version bump]: for PROD'
+            git commit -m '[image version promotion]: DEV to PROD'
             git push
           fi

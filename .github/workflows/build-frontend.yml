@@ -115,6 +115,6 @@ jobs:
             echo "No changes to commit"
           else
             git remote set-url origin https://x-access-token:${{ env.TOKEN }}@github.com/andrislapins/cv_web.git
-            git commit -m "[automated version bump]: FRONTEND DEV to $BUILD_JOB_IMAGE_TAG"
+            git commit -m "[image version bump]: FRONTEND DEV to $BUILD_JOB_IMAGE_TAG"
             git push
           fi
