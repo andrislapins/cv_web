@@ -49,7 +49,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: wrapper
-          cache-disabled: true # Disable built-in caching since we're using actions/cache
+          cache-disabled: true # Disable built-in caching since actions/cache are used
 
       - name: Build backend
         run: |
@@ -87,7 +87,7 @@ jobs:
 
       - name: Build and Push Image Multi-Arch Image
         env:
-          IMAGE_URL: ghcr.io/${{ github.repository_owner }}//cv-web-backend
+          IMAGE_URL: ghcr.io/${{ github.repository_owner }}/cv-web-backend
           IMAGE_TAG: ${{ steps.time.outputs.formattedTime }}00-${{ steps.sha.outputs.sha_short }}
         run: |
           docker buildx create --use
