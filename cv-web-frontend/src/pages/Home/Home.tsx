@@ -16,7 +16,7 @@ function Home() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + Reactasdsd999</h1>
+      <h1>Vite + Reactasdsd999ggg</h1>
       <nav>
         <Link to="/jobs">List Jobs</Link> |{' '}
         <Link to="/educations">List Educations</Link>

@@ -25,7 +25,7 @@ jobs:
       BUILD_JOB_IMAGE_TAG: "${{ steps.time.outputs.formattedTime }}00-${{ steps.sha.outputs.sha_short }}"
 
     steps:
-      - name: Prepare - Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Log in to GitHub Container Registry
@@ -91,10 +91,10 @@ jobs:
             -d '{"context":"test","state":"success"}' \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA"
 
-      - name: Prepare - Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare - Checkout ArgoCD configs repo
+      - name: Checkout ArgoCD configs repo
         uses: actions/checkout@v4
         with:
           repository: andrislapins/cv_web
@@ -108,7 +108,6 @@ jobs:
             -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
             -k ${IMAGE_TAG_KEY}
-          git status
           git config --global user.email "hetzner-cloud-cv-web-gh-app[bot]@users.noreply.github.com"
           git config --global user.name "hetzner-cloud-cv-web-gh-app[bot]"
           git add argocd/dev/values.yaml

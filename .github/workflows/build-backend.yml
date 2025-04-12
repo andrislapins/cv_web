@@ -145,7 +145,6 @@ jobs:
             -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
             -k ${IMAGE_TAG_KEY}
-          git status
           git config --global user.email "hetzner-cloud-cv-web-gh-app[bot]@users.noreply.github.com"
           git config --global user.name "hetzner-cloud-cv-web-gh-app[bot]"
           git add argocd/dev/values.yaml
