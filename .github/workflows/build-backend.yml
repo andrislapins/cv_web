@@ -137,16 +137,15 @@ jobs:
       - name: Update and push to ArgoCD configs
         run: |
           chmod +x ./helm/helm-values-bump.py
-          pwd
-          tree .
           ./helm/helm-values-bump.py \
             -f argocd/dev/values.yaml \
             -i ${BUILD_JOB_IMAGE_TAG} \
             -k ${IMAGE_TAG_KEY}
-          cd argocd/configs/argocd
+          # cd argocd/configs/argocd
+          git status
           git config --global user.email "cicd@andrefeuille.com"
           git config --global user.name "CV_WEB CICD"
-          git add ./dev/values.yaml
+          git add argocd/dev/values.yaml
           
           if git diff --cached --quiet; then
             echo "No changes to commit"
