@@ -7,9 +7,10 @@ metadata:
     nginx.ingress.kubernetes.io/whitelist-source-range: "{{ .Values.general.nginxIpWhitelist }}"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "{{ .Values.general.cloudflareProxied }}"
     external-dns.alpha.kubernetes.io/access: public
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    cert-manager.io/acme-challenge-type: dns01
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
 spec:
   rules:
     - host: {{ .Values.general.backendIngressURL }}
