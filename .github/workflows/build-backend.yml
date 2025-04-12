@@ -51,7 +51,7 @@ jobs:
           gradle-version: wrapper
           cache-disabled: true # Disable built-in caching since we're using actions/cache
 
-      - name: Build project
+      - name: Build backend
         run: |
           ./gradlew build --build-cache
 

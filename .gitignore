@@ -2,15 +2,9 @@
 .vscode/
 .venv/
 
+compose/
+hetzner/
+kubespray/
+
 .env
 TODO.txt
-
-logs/
-postgres/certs/
-
-postgres/
-temporal/
-kubespray
-hetzner/
-cv-web-backend/
-cv-web-backend/
