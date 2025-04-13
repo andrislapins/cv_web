@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cv-web-backend.fullname" . }}-db-config
+  namespace: {{ .Values.general.appNamespace }}
+  labels:
+    app: {{ include "cv-web-backend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+data:
+  DB_HOST: "{{ .Values.general.dbHost }}"
+  DB_NAME: "{{ .Values.general.dbName }}"
+  DB_USERNAME_APP: "{{ .Values.general.dbUsernameApp }}"
+  DB_USERNAME_FLYWAY: "{{ .Values.general.dbUsernameFlyway }}"
+  DB_PASSWORD_APP: "{{ .Values.general.dbpasswordApp }}"
+  DB_PASSWORD_FLYWAY: "{{ .Values.general.dbpasswordFlyway }}"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cv-web-backend.fullname" . }}-temporal-config
+  namespace: {{ .Values.general.appNamespace }}
+  labels:
+    app: {{ include "cv-web-backend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+data:
+  TEMPORAL_URL: "{{ .Values.general.temporalUrl }}"
+  TEMPORAL_PORT: "{{ .Values.general.temporalPort }}"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cv-web-backend.fullname" . }}-javaspring-config
+  namespace: {{ .Values.general.appNamespace }}
+  labels:
+    app: {{ include "cv-web-backend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+data:
+  application.yml: |
+    db:
+      reset: {{ .Values.general.dbReset }}
+    management:
+      server:
+        port: 8082
+      endpoints:
+        web:
+          exposure:
+            include: "prometheus"
+      metrics:
+        tags:
+          service.name: "{{ include "cv-web-backend.name" . }}"
+        export:
+          prometheus:
+            enabled: true
+          health:
+            enable: false
+    spring:
+      datasource:
+        username: ${DB_USERNAME_APP}
+        password: ${DB_PASSWORD_APP}
+        url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
+        type: fintech.common.hikari.ExtendedHikariDataSource
+        hikari:
+          minimum-idle: 1
+          maximum-pool-size: 20
+          idle-timeout: 60000
+          connection-test-query: select 1
+          schema: cv_web_schema
+          auto-commit: false
+      flyway:
+        user: ${DB_USERNAME_FLYWAY}
+        password: ${DB_PASSWORD_FLYWAY}
+        url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
+        default-schema: cv_web_schema
+        clean-disabled: {{ .Values.general.flywayCleanDisabled }}
+      temporal:
+        connection:
+          target: ${TEMPORAL_URL}:${TEMPORAL_PORT}
+        workers:
+          - task-queue: DefaultQueue
+            rate-limits:
+              max-worker-activities-per-second: 1
+              max-task-queue-activities-per-second: 1
+        workers-auto-discovery:
+          packages:
+            - "cv_web_backend.**.temporal.**"

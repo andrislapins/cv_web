@@ -2,11 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "cv-web-backend.fullname" . }}
+  namespace: {{ .Values.general.appNamespace }}
   labels:
     app: {{ include "cv-web-backend.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: {{ include "cv-web-backend.name" . }}
@@ -14,10 +16,67 @@ spec:
     metadata:
       labels:
         app: {{ include "cv-web-backend.name" . }}
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "true"
+        instrumentation.opentelemetry.io/container-names: {{ include "cv-web-backend.name" . }}
+        checksum/config-common: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
     spec:
+      - name: 1-wait-postgres
+        image: postgres:15.1-alpine
+        envFrom:
+          - configMapRef:
+              name: "{{ include "cv-web-backend.fullname" . }}-db-config"
+        command: [ 'sh', '-c', 'echo -e "Checking DB availability"; while ! nc -z $DB_HOST 5432; do sleep 1; printf "-"; done; echo -e "  >> DB available";' ]
       containers:
         - name: {{ include "cv-web-backend.name" . }}
           image: "ghcr.io/andrislapins/cv-web-backend:{{ .Values.general.backendImageTag }}"
+          command: [ "/bin/sh", "-c", "java -jar /app/app.jar --spring.config.location=/app/config/application.yml" ]
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 8080
+            - name: mgmt
+              containerPort: 8082
+          volumeMounts:
+            - name: tmp-vol
+              mountPath: /tmp
+            - name: spring-config
+              mountPath: /app/config
+              readOnly: true
+          envFrom:
+            - configMapRef:
+                name: "{{ include "cv-web-backend.fullname" . }}-db-config"
+            - configMapRef:
+                name: "{{ include "cv-web-backend.fullname" . }}-temporal-config"
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            failureThreshold: 120
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/v1/jobs
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 15
+            failureThreshold: 2
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            failureThreshold: 10
+          resources:
+            requests:
+              cpu: 500m
+              memory: 5120i
+            limits:
+              cpu: 1000m
+              memory: 10240Mi
+      volumes:
+        - name: tmp-vol
+          emptyDir:
+            medium: "Memory"
+        - name: spring-config
+          configMap:
+            name: "{{ include "cv-web-backend.fullname" . }}-javaspring-config"

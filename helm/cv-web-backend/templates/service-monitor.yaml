@@ -1,0 +1,18 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "cv-web-backend.fullname" . }}-service-monitor-jvm
+  namespace: {{ .Values.general.appNamespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "cv-web-backend.name" . }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Values.general.appNamespace }}
+  endpoints:
+  - interval: 30s
+    targetPort: 8082
+    scheme: http
+    path: /actuator/prometheus
