@@ -10,6 +10,18 @@ resource "kubernetes_namespace" "grafana" {
   }
 }
 
+resource "kubernetes_secret" "grafana_admin" {
+  metadata {
+    name      = "grafana-admin-credentials"
+    namespace = "grafana"
+  }
+  data = {
+    admin-user     = "admin"
+    admin-password = var.GRAFANA_ADMIN_PASSWORD
+  }
+  type = "Opaque"
+}
+
 resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
@@ -20,13 +32,15 @@ resource "helm_release" "grafana" {
 
   values = [
     templatefile("${path.module}/files/grafana.tpl.yaml", {
-      subdomain     = "grafana"
-      domain        = "andrefeuille.com"
-      storage_class = "hcloud-volumes"
+      subdomain              = "grafana"
+      domain                 = "andrefeuille.com"
+      storage_class          = "hcloud-volumes"
+      grafana_admin_password = var.GRAFANA_ADMIN_PASSWORD
     })
   ]
 
   depends_on = [
+    kubernetes_secret.grafana_admin,
     kubernetes_config_map.grafana_dashboard_kubernetes_views_global,
     kubernetes_config_map.grafana_dashboard_kubernetes_views_nodes,
     kubernetes_config_map.grafana_dashboard_kubernetes_views_namespaces,

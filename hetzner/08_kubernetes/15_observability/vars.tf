@@ -12,3 +12,8 @@ variable "cert_manager_issuer" {
   description = "The name of the cert-manager issuer"
   default     = "cloudflare-issuer"
 }
+
+variable "GRAFANA_ADMIN_PASSWORD" {
+  type        = string
+  description = "The password for the Grafana admin user"
+}

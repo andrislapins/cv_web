@@ -71,10 +71,10 @@ persistence:
   storageClassName: ${storage_class}
   size: 100Gi
 
-# Administrator credentials
-# I might want to use a secure way to manage this password, like a secret
-# adminUser: admin
-# adminPassword: 1xYsGf1I0M4H7ZWO6pYS
+admin:
+  existingSecret: grafana-admin-credentials # pragma: allowlist secret
+  userKey: admin-user
+  passwordKey: admin-password # pragma: allowlist secret
 
 resources:
   limits:
@@ -170,7 +170,7 @@ grafana.ini:
     domain: ${subdomain}.${domain}
     root_url: https://${subdomain}.${domain}
   auth:
-    disable_login_form: true
+    disable_login_form: false
   auth.anonymous:
     enabled: true
-    org_role: Admin
+    org_role: Viewer
