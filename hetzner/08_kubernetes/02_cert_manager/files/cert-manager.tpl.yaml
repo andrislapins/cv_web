@@ -1,0 +1,7 @@
+
+crds:
+  enabled: ${install_crds}
+  keep: ${install_crds}
+
+securityContext:
+  fsGroup: ${fs_group}

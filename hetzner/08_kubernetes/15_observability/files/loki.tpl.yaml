@@ -1,0 +1,127 @@
+global:
+  dnsService: "coredns"
+
+deploymentMode: SingleBinary
+
+loki:
+  auth_enabled: false
+  commonConfig:
+    replication_factor: 1
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  pattern_ingester:
+    enabled: true
+  limits_config:
+    allow_structured_metadata: true
+    volume_enabled: true
+  ruler:
+    enable_api: true
+
+singleBinary:
+  replicas: 1
+  storageClass: ${storage_class}
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClassName: ${storage_class}
+
+rules:
+  persistence:
+    storageClassName: ${storage_class}
+
+resultsCache:
+  persistence:
+    storageClassName: ${storage_class}
+
+chunksCache:
+  persistence:
+    storageClassName: ${storage_class}
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1024Mi"
+      cpu: "1000m"
+
+patternIngester:
+  persistence:
+    storageClassName: ${storage_class}
+
+minio:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 100Gi
+    storageClass: ${storage_class}
+
+backend:
+  replicas: 0
+  persistence:
+    storageClassName: ${storage_class}
+
+read:
+  replicas: 0
+  persistence:
+    storageClassName: ${storage_class}
+
+write:
+  replicas: 0
+  persistence:
+    storageClassName: ${storage_class}
+
+ingester:
+  replicas: 0
+  persistence:
+    claims:
+      - name: data
+        storageClassName: ${storage_class}
+
+querier:
+  replicas: 0
+  persistence:
+    storageClassName: ${storage_class}
+
+queryFrontend:
+  replicas: 0
+
+queryScheduler:
+  replicas: 0
+
+distributor:
+  replicas: 0
+
+compactor:
+  replicas: 0
+  persistence:
+    storageClassName: ${storage_class}
+    claims:
+      - name: data
+        storageClassName: ${storage_class}
+
+indexGateway:
+  replicas: 0
+  persistence:
+    storageClassName: ${storage_class}
+
+bloomCompactor:
+  replicas: 0
+  persistence:
+    claims:
+      - name: data
+        storageClassName: ${storage_class}
+
+bloomGateway:
+  replicas: 0
+  persistence:
+    claims:
+      - name: data
+        storageClassName: ${storage_class}
+

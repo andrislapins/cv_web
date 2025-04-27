@@ -1,0 +1,14 @@
+provider: cloudflare
+domainFilters:
+  - ${domain}
+cloudflare:
+  apiToken: ${cloudflare_token}
+  email: ${cloudflare_email}
+  proxied: false
+sources:
+  - ingress
+txtOwnerId: "${env}-via-domains"
+policy: sync
+extraArgs:
+  exclude-target-net: 172.16.0.0/12
+  # source: istio-gateway

@@ -1,0 +1,33 @@
+
+auth:
+  enablePostgresUser: true
+  postgresPassword: ${postgres_password}
+
+primary:
+  persistence:
+    enabled: true
+    storageClass: "${storage_class}"
+    size: "${storage_size}"
+  pgHbaConfiguration: |-
+    local all all trust
+    host all all localhost trust
+    host all all 0.0.0.0/0 md5
+  initdb:
+    scripts:
+      dbinit.sql: |-
+        CREATE ROLE app_user WITH PASSWORD 'app_user' createdb SUPERUSER LOGIN;
+        CREATE ROLE app_user_flyway WITH PASSWORD 'app_user_flyway' createdb SUPERUSER LOGIN;
+        CREATE ROLE app_user_temporal WITH PASSWORD 'app_user_temporal' createdb SUPERUSER LOGIN;
+        create database cv_web with owner app_user_flyway;
+        create database temporal with owner app_user_temporal;
+        create database temporal_visibility with owner app_user_temporal;
+        \c cv_web
+        create extension unaccent schema pg_catalog;
+        create extension pg_trgm schema pg_catalog;
+        create extension if not exists "uuid-ossp" schema pg_catalog;
+        create extension if not exists "hstore" schema pg_catalog;
+
+  postgresqlExtendedConf:
+    logMinDurationStatement: 500
+    sessionPreloadLibraries: 'auto_explain'
+    sharedPreloadLibraries: 'pg_stat_statements'

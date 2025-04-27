@@ -9,3 +9,4 @@ repos:
     hooks:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
+        exclude: hetzner/08_kubernetes/15_observability/grafana_dashboards/.*\.json

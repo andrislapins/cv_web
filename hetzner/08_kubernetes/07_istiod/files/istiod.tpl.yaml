@@ -1,0 +1,4 @@
+
+pilot:
+  env:
+    PILOT_ENABLE_GATEWAY_API: ${pilot_gw_api}

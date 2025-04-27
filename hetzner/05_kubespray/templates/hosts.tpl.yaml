@@ -1,0 +1,31 @@
+all:
+  hosts:
+%{ for name, ip in jsondecode(nodes) ~}
+    ${name}:
+      ansible_host: ${ip}
+      ip: ${ip}
+      access_ip: ${ip}
+      ansible_user: root
+%{ endfor ~}
+  children:
+    kube_control_plane:
+      hosts:
+%{ for name, ip in jsondecode(nodes) ~}
+        ${name}:
+%{ endfor ~}
+    kube_node:
+      hosts:
+%{ for name, ip in jsondecode(nodes) ~}
+        ${name}:
+%{ endfor ~}
+    etcd:
+      hosts:
+%{ for name, ip in jsondecode(nodes) ~}
+        ${name}:
+%{ endfor ~}
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}

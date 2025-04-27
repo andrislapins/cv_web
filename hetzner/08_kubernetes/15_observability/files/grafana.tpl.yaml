@@ -1,0 +1,176 @@
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        uid: prometheus
+        access: proxy
+        orgId: 1
+        url: http://prometheus-operated.kube-prometheus-stack.svc.cluster.local:9090
+        basicAuth: false
+        isDefault: true
+        version: 1
+        editable: true
+        jsonData:
+          httpMethod: GET
+      - name: Tempo
+        type: tempo
+        uid: tempo
+        access: proxy
+        orgId: 1
+        url: http://tempo.tempo.svc.cluster.local:3100
+        basicAuth: false
+        isDefault: false
+        version: 1
+        editable: true
+        apiVersion: 1
+        jsonData:
+          httpMethod: GET
+          serviceMap:
+            datasourceUid: prometheus
+          streamingEnabled:
+            search: false
+          tracesToLogsV2:
+            datasourceUid: loki
+            spanStartTimeShift: "-2m"
+            spanEndTimeShift: "2m"
+            tags:
+              - traceid
+              - spanid
+            filterByTraceID: true
+            filterBySpanID: true
+      - name: Loki
+        type: loki
+        uid: loki
+        access: proxy
+        orgId: 1
+        url: http://loki.loki.svc.cluster.local:3100
+        basicAuth: false
+        isDefault: false
+        version: 1
+        editable: true
+        jsonData:
+          maxLines: 1000
+          derivedFields:
+            - datasourceUid: tempo
+              matcherRegex: "traceid=(\\w+)"
+              name: TraceID
+              url: "$${__value.raw}"
+              urlDisplayLabel: "View Trace"
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false
+
+persistence:
+  enabled: true
+  storageClassName: ${storage_class}
+  size: 100Gi
+
+# Administrator credentials
+# I might want to use a secure way to manage this password, like a secret
+# adminUser: admin
+# adminPassword: 1xYsGf1I0M4H7ZWO6pYS
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: "kubernetesviewsglobal"
+        orgId: 1
+        folder: "Kubernetes"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/kubernetesviewsglobal
+      - name: "kubernetesviewsnodes"
+        orgId: 1
+        folder: "Kubernetes"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/kubernetesviewsnodes
+      - name: "kubernetesviewsnamespaces"
+        orgId: 1
+        folder: "Kubernetes"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/kubernetesviewsnamespaces
+      - name: "kubernetesviewspods"
+        orgId: 1
+        folder: "Kubernetes"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/kubernetesviewspods
+      - name: "istiocontrolplane"
+        orgId: 1
+        folder: "Istio"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/istiocontrolplane"
+      - name: "istiomesh"
+        orgId: 1
+        folder: "Istio"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/istiomesh"
+      - name: "istioworkload"
+        orgId: 1
+        folder: "Istio"
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/istioworkload"
+
+dashboardsConfigMaps:
+    kubernetesviewsglobal: "grafana-dashboard-kubernetes-views-global"
+    kubernetesviewsnodes: "grafana-dashboard-kubernetes-views-nodes"
+    kubernetesviewsnamespaces: "grafana-dashboard-kubernetes-views-namespaces"
+    kubernetesviewspods: "grafana-dashboard-kubernetes-views-pods"
+    istiocontrolplane: "grafana-dashboard-istio-control-plane"
+    istiomesh: "grafana-dashboard-istio-mesh"
+    istioworkload: "grafana-dashboard-istio-workload"
+
+grafana.ini:
+  paths:
+    data: /var/lib/grafana/
+    logs: /var/log/grafana
+    plugins: /var/lib/grafana/plugins
+    provisioning: /etc/grafana/provisioning
+  analytics:
+    check_for_updates: true
+  log:
+    mode: console
+  grafana_net:
+    url: https://grafana.net
+  server:
+    domain: ${subdomain}.${domain}
+    root_url: https://${subdomain}.${domain}
+  auth:
+    disable_login_form: true
+  auth.anonymous:
+    enabled: true
+    org_role: Admin

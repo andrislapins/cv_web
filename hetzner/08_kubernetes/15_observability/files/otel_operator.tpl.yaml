@@ -1,0 +1,13 @@
+manager:
+  collectorImage:
+    repository: otel/opentelemetry-collector-contrib
+    tag: 0.121.0
+
+crds:
+  create: true
+
+admissionWebhooks:
+  certManager:
+    enabled: true
+  autoGenerateCert:
+    enabled: false

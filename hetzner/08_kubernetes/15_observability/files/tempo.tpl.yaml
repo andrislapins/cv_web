@@ -1,0 +1,14 @@
+tempo:
+  storage:
+    trace:
+      backend: local
+      local:
+        path: /var/tempo/traces
+  persistence:
+    enabled: true
+    storageClassName: ${storage_class}
+    accessModes:
+      - ReadWriteOnce
+    size: 50Gi
+  service:
+    type: ClusterIP

@@ -1,0 +1,87 @@
+
+global:
+  domain: ${subdomain}.${domain}
+  securityContext:
+    fsGroup: 999
+    runAsUser: 999
+  logging:
+    level: error
+
+controller:
+  serviceAccount:
+    create: false
+    name: ${service_account_name}
+  metrics:
+    enabled: ${metrics}
+    serviceMonitor:
+      enabled: ${metrics}
+
+repoServer:
+  metrics:
+    enabled: ${metrics}
+    serviceMonitor:
+      enabled: ${metrics}
+  serviceAccount:
+    create: false
+    name: ${service_account_name}
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+
+server:
+  config:
+    url: https://${subdomain}.${domain}
+    statusbadge.enabled: "true"
+  metrics:
+    enabled: ${metrics}
+    serviceMonitor:
+      enabled: ${metrics}
+  serviceAccount:
+    create: false
+    name: ${service_account_name}
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+  ingress:
+    enabled: false
+  extraArgs:
+    - --dex-server-plaintext
+    - --insecure
+
+dex:
+  serviceAccount:
+    create: false
+    name: ${service_account_name}
+
+configs:
+  params:
+    server.dex.server: "http://argo-cd-argocd-dex-server:5556"
+    dexserver.disable.tls: "true"
+  rbac:
+    create: true
+    scopes: "[email]"
+    policy.default: "" # "" will see nothing inside
+    policy.csv: |
+      g, lapinsandris9@gmail.com, role:admin
+  cm:
+    url: https://${subdomain}.${domain}
+    statusbadge.enabled: true
+    exec.enabled: ${enable_web_terminal}
+    dex.config: |
+      connectors:
+        - type: github
+          id: github
+          name: "GitHub"
+          config:
+            clientID: ${gh_oauth_argocd_client_id}
+            clientSecret: ${gh_oauth_argocd_client_secret}
+            redirectURI: https://${subdomain}.${domain}/api/dex/callback
+            scopes:
+            - email
+
+redisSecretInit:
+  jobAnnotations:
+    sidecar.istio.io/inject: "false"
+  podAnnotations:
+    sidecar.istio.io/inject: "false"

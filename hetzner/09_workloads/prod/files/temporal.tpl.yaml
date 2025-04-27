@@ -1,0 +1,102 @@
+
+cassandra:
+  enabled: false
+mysql:
+  enabled: false
+prometheus:
+  enabled: false
+grafana:
+  enabled: false
+elasticsearch:
+  enabled: false
+
+postgresql:
+  enabled: true
+schema:
+  setup:
+    enabled: true
+  update:
+    enabled: true
+admintools:
+  enabled: true
+
+web:
+  enabled: true
+  additionalVolumeMounts:
+    - name: home-uiserver-config
+      mountPath: /home/ui-server/config
+  additionalVolumes:
+    - name: home-uiserver-config
+      emptyDir: {}
+  ingress:
+    enabled: true
+    className: ${ingress_class}
+    annotations:
+      cert-manager.io/cluster-issuer: "${cert_manager_issuer}"
+      nginx.ingress.kubernetes.io/whitelist-source-range: "${nginx_ip_whitelist}"
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "${cloudflare_proxied}"
+      external-dns.alpha.kubernetes.io/access: "public"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - ${subdomain_temporal}.${domain}
+    tls:
+      - hosts:
+          - ${subdomain_temporal}.${domain}
+        secretName: ${subdomain_temporal}-${domain}-tls
+
+server:
+  additionalInitContainers:
+    - name: 1-wait-postgres
+      image: postgres:17-alpine
+      command: [ 'sh', '-c', 'echo -e "Checking db availability"; while ! nc -z postgresql.${app_namespace}.svc.cluster.local 5432; do sleep 1; printf "-"; done; echo -e "  >> Postgres available";' ]
+  additionalVolumeMounts:
+  - name: etc-temporal-config
+    mountPath: /etc/temporal/config
+  additionalVolumes:
+  - name: etc-temporal-config
+    emptyDir: {}
+  config:
+    namespaces:
+      create: true
+      namespace:
+        - name: default
+          retention: 3d
+    persistence:
+      default:
+        driver: "sql"
+        sql:
+          driver: "postgres12"
+          host: postgresql.${app_namespace}.svc.cluster.local
+          port: 5432
+          database: "temporal"
+          user: "app_user_temporal"
+          password: "app_user_temporal" # pragma: allowlist secret
+          maxConns: 10
+          maxConnLifetime: "1h"
+      visibility:
+        driver: "sql"
+        sql:
+          driver: "postgres12"
+          host: postgresql.${app_namespace}.svc.cluster.local
+          port: 5432
+          database: "temporal_visibility"
+          user: "app_user_temporal"
+          password: "app_user_temporal" # pragma: allowlist secret
+          maxConns: 10
+          maxConnLifetime: "1h"
+  dynamicConfig:
+    frontend.enableUpdateWorkflowExecution:
+      - value: true
+  frontend:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-go: "true"
+  history:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-go: "true"
+  matching:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-go: "true"
+  worker:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-go: "true"

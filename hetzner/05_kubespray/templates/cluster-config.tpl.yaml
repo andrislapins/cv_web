@@ -1,0 +1,27 @@
+
+cloud_provider: external
+external_cloud_provider: hcloud
+network_id: kube-private-network
+
+external_hcloud_cloud:
+  token_secret_name: hcloud-api-token # pragma: allowlist secret
+  with_networks: true
+  service_account_name: hcloud-sa
+  hcloud_api_token: "${hcloud_api_token}"
+  controller_image_tag: v1.24.0
+
+apiserver_loadbalancer_domain_name: "${api_server_lb_subdomain}.${domain}"
+kubelet_preferred_address_types: ExternalIP,ExternalDNS,InternalIP,InternalDNS,Hostname
+kubelet_bind_address: "0.0.0.0"
+kube_proxy_metrics_bind_address: "0.0.0.0:10249"
+kube_encrypt_secret_data: true
+
+kube_network_plugin: cilium
+cilium_enable_ipv4: true
+cilium_enable_ipv6: false
+cilium_hubble_install: true
+cilium_enable_hubble: true
+cilium_enable_hubble_ui: true
+cilium_hubble_tls_generate: true
+
+metrics_server_enabled: true

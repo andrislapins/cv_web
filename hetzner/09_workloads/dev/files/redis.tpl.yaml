@@ -1,0 +1,27 @@
+
+auth:
+  enabled: true
+  password: "${redis_password}"
+
+architecture: standalone
+
+master:
+  persistence:
+    enabled: true
+    storageClass: "${storage_class}"
+    size: "${storage_size}"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+replica:
+  replicaCount: 0
+
+metrics:
+  enabled: ${metrics}
+  serviceMonitor:
+    enabled: ${metrics}
