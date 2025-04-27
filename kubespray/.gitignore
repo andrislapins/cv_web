@@ -1,0 +1,7 @@
+
+.venv
+
+.kube/config
+clusters/kube-private-network/credentials/
+clusters/kube-private-network/cluster-config.yaml
+clusters/kube-private-network/hosts.yaml
