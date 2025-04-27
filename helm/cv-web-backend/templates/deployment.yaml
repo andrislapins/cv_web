@@ -16,6 +16,8 @@ spec:
     metadata:
       labels:
         app: {{ include "cv-web-backend.name" . }}
+        istio: monitor
+        sidecar.istio.io/inject: "true"
       annotations:
         instrumentation.opentelemetry.io/inject-java: "true"
         instrumentation.opentelemetry.io/container-names: {{ include "cv-web-backend.name" . }}

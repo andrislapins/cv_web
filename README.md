@@ -1,30 +1,91 @@
-# cv_web. WORK IN PROGRESS
+# 📚 CV Web Platform (🚧 Work In Progress)
 
-## From browser available services
+Welcome to **cv-web**, my personal **portfolio and technology playground**!  
+This project showcases **full-stack engineering**, **DevOps**, and **cloud-native** best practices.
 
-| Service      | URL                                            | Description                            |
-| ------------ | ---------------------------------------------- | -------------------------------------- |
-| Frontend     | [http://localhost:3000](http://localhost:3000) | Vite/React/TypeScript frontend service |
-| Backend      | [http://localhost:8080](http://localhost:8080) | Java/Spring backend service            |
-| Grafana      | [http://localhost:3001](http://localhost:3001) | Grafana dashboard service              |
-| Prometheus   | [http://localhost:9090](http://localhost:9090) | Prometheus metrics service             |
-| AlertManager | [http://localhost:9093](http://localhost:9093) | Prometheus AlertManager service        |
-| Temporal UI  | [http://localhost:8088](http://localhost:8088) | Temporal UI                            |
+---
 
-## Setup
+## 🚀 Project Stack Overview
 
-### Detect secrets
+| Layer         | Tech Stack                                                                                   | Details |
+|:--------------|:---------------------------------------------------------------------------------------------|:--------|
+| Frontend      | [Vite](https://vitejs.dev/) + [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) | SPA frontend, responsive UI |
+| Backend       | [Spring Boot](https://spring.io/projects/spring-boot) + Java 17                                | RESTful API, PostgreSQL |
+| CI/CD         | [Argo CD](https://argo-cd.readthedocs.io/) + GitOps                                           | Kubernetes GitOps deployment |
+| Infrastructure| [Terraform](https://www.terraform.io/), [Terramate](https://terramate.io/), [Hetzner Cloud](https://www.hetzner.com/cloud) | Infrastructure as Code (IaC) |
+| Kubernetes    | [Kubespray](https://kubespray.io/) on Hetzner VMs                                             | Production-grade cluster setup |
+| Ingress       | [K8s Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/), [Istio Mesh](https://istio.io/latest/about/service-mesh/) | TLS, mTLS |
+| Monitoring    | [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/), [Kiali](https://kiali.io/), [Loki](https://grafana.com/oss/loki/), [Tempo](https://grafana.com/oss/tempo/) | Observability stack |
+| Tracing       | [OpenTelemetry](https://opentelemetry.io/) + [Tempo](https://grafana.com/oss/tempo/)           | Distributed tracing |
+| Async Jobs    | [Temporal.io](https://temporal.io/)                                                           | Workflow orchestration |
+| DNS & TLS     | [Cloudflare](https://www.cloudflare.com/) + [cert-manager](https://cert-manager.io/)            | Wildcard certificates, CDN |
+
+---
+
+## 🌍 Publicly Available Services
+
+| Service                | URL                                                                  | Description                    | Status                     |
+|:-----------------------|:--------------------------------------------------------------------|:-------------------------------|:---------------------------|
+| Frontend                | [https://frontend.andrefeuille.com](https://frontend.andrefeuille.com) | React TypeScript App            | ❌ **Not deployed yet** |
+| Backend API             | [https://backend.andrefeuille.com](https://backend.andrefeuille.com)   | Java Spring Boot API            | ❌ **Not deployed yet** |
+| Grafana                 | [https://grafana.andrefeuille.com](https://grafana.andrefeuille.com)   | Observability dashboards        | ✅ **Online**            |
+| Prometheus              | [https://prometheus.andrefeuille.com](https://prometheus.andrefeuille.com) | Metrics database            | ✅ **Online**            |
+| Kiali                   | [https://kiali.andrefeuille.com](https://kiali.andrefeuille.com)       | Istio service mesh visualizer   | ✅ **Online**            |
+| Argo CD                 | [https://argo-cd.andrefeuille.com](https://argo-cd.andrefeuille.com)     | GitOps CI/CD pipelines          | ✅ **Online**            |
+| Bookinfo App (Demo)     | [https://bookinfo.andrefeuille.com/productpage](https://bookinfo.andrefeuille.com/productpage) | Istio microservices demo app | ✅ **Online**            |
+
+---
+
+## ⚡ Local Development Setup
+
+### 1. Setup Python environment (for secret scanning)
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip setuptools wheel
-pip install --upgrade urllib3 requests
-pip install --upgrade detect-secrets
+pip install detect-secrets
 ```
 
-## Launch
+🔍 **Detect leaked secrets** inside your code:
 
 ```bash
-clear && docker compose down --volumes --remove-orphans && docker compose -f docker-compose.yml -f docker-compose.temporal.yml -f docker-compose.otel.yml -f docker-compose.grafana.yml up --build
+detect-secrets scan > .secrets.baseline
 ```
+
+---
+
+## 📂 Repo Structure (Important Parts)
+
+```bash
+.
+├── cv-web-frontend/     # Vite + React + TypeScript frontend
+├── cv-web-backend/      # Java Spring Boot backend
+├── helm/                # Helm charts for frontend & backend
+├── argocd/              # Argo CD GitOps configs
+├── hetzner/             # Terraform IaC for Kubernetes, Istio, monitoring stack
+├── kubespray/           # Kubernetes cluster setup on Hetzner
+└── README.md            # You're here!
+```
+
+---
+
+## 📊 Observability
+
+✅ Metrics via **Prometheus**  
+✅ Dashboards via **Grafana**  
+✅ Distributed tracing with **OpenTelemetry** → **Tempo**  
+✅ Logs aggregation with **Loki**
+
+---
+
+## 🚀 Why This Project?
+
+- Showcase **Kubernetes** deployment skills
+- Build a real-world **DevOps + Cloud Native** platform
+- Prove proficiency in **GitOps**, **Monitoring**, **Tracing**, **IaC**, and **Microservices**
+
+---
+
+> 🌟 **Building for production-readiness, developer experience and scalability in mind.**  
+> ❤️ Powered by open-source technologies.

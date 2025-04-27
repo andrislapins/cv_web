@@ -2,9 +2,11 @@
 .vscode/
 .venv/
 
+attic/
+
 compose/
-hetzner/
 kubespray/
+istio/
 
 .env
 TODO.txt

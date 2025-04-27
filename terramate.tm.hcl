@@ -30,6 +30,11 @@ generate_hcl "terramate_vars_global.tf" {
       description = "Cloudflare zone ID"
       sensitive   = true
     }
+    variable "CLOUDFLARE_ADMIN_EMAIL" {
+      type        = string
+      description = "Cloudflare admin email"
+      sensitive   = true
+    }
     variable "env" {
       type        = string
       description = "Infrastructure environment"
@@ -76,6 +81,10 @@ generate_hcl "terramate_providers.tf" {
     }
     provider "null" {}
     provider "local" {}
+    provider "http" {}
+    provider "kubectl" {
+      config_path = "~/.kube/config"
+    }
   }
 }
 
@@ -108,6 +117,10 @@ generate_hcl "terramate_provider_versions.tf" {
         local = {
           source  = "hashicorp/local"
           version = "~> 2.5"
+        }
+        kubectl = {
+          source  = "gavinbunney/kubectl"
+          version = "~> 1.19"
         }
       }
     }

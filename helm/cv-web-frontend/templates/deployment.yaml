@@ -16,6 +16,8 @@ spec:
       labels:
         app: {{ include "cv-web-frontend.name" . }}
         name: frontend
+        istio: monitor
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: {{ include "cv-web-frontend.name" . }}
