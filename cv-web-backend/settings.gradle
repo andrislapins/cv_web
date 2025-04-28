@@ -1,1 +1,6 @@
 rootProject.name = 'cv-web-backend'
+
+include ':modules:core'
+// include ':modules:mailgun'
+// include ':modules:stripe'
+// include ':modules:temporal'
