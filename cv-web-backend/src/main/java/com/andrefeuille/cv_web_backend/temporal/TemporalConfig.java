@@ -13,12 +13,16 @@ public class TemporalConfig {
 
     @Bean
     public WorkflowServiceStubs workflowServiceStubs() {
-        return WorkflowServiceStubs.newLocalServiceStubs();
+        return WorkflowServiceStubs.newLocalServiceStubs(); // you can adjust this
     }
 
     @Bean
-    public WorkerFactory workerFactory(WorkflowServiceStubs serviceStubs) {
-        WorkflowClient client = WorkflowClient.newInstance(serviceStubs);
+    public WorkflowClient workflowClient(WorkflowServiceStubs serviceStubs) {
+        return WorkflowClient.newInstance(serviceStubs);
+    }
+
+    @Bean
+    public WorkerFactory workerFactory(WorkflowClient client) {
         WorkerFactory factory = WorkerFactory.newInstance(client);
         Worker worker = factory.newWorker("cv-web-task-queue");
 

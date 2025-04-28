@@ -12,8 +12,8 @@ public class TemporalTestController {
 
     private final WorkflowClient workflowClient;
 
-    public TemporalTestController(WorkflowServiceStubs serviceStubs) {
-        this.workflowClient = WorkflowClient.newInstance(serviceStubs);
+    public TemporalTestController(WorkflowClient workflowClient) {
+        this.workflowClient = workflowClient;
     }
 
     @GetMapping("/temporal/hello")
