@@ -23,12 +23,13 @@ spec:
         instrumentation.opentelemetry.io/container-names: {{ include "cv-web-backend.name" . }}
         checksum/config-common: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
     spec:
-      - name: 1-wait-postgres
-        image: postgres:15.1-alpine
-        envFrom:
-          - configMapRef:
-              name: "{{ include "cv-web-backend.fullname" . }}-db-config"
-        command: [ 'sh', '-c', 'echo -e "Checking DB availability"; while ! nc -z $DB_HOST 5432; do sleep 1; printf "-"; done; echo -e "  >> DB available";' ]
+      initContainers:
+        - name: 1-wait-postgres
+          image: postgres:15.1-alpine
+          envFrom:
+            - configMapRef:
+                name: "{{ include "cv-web-backend.fullname" . }}-db-config"
+          command: [ 'sh', '-c', 'echo -e "Checking DB availability"; while ! nc -z $DB_HOST 5432; do sleep 1; printf "-"; done; echo -e "  >> DB available";' ]
       containers:
         - name: {{ include "cv-web-backend.name" . }}
           image: "ghcr.io/andrislapins/cv-web-backend:{{ .Values.general.backendImageTag }}"
