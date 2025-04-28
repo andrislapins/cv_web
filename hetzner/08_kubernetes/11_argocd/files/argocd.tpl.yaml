@@ -61,7 +61,14 @@ configs:
   rbac:
     create: true
     scopes: "[email]"
-    policy.default: role:readonly
+    # policy.default: role:readonly
+    policy.default: role:none
+    # policy.csv: |
+    #   p, role:readonly, applications, get, *, allow
+    #   p, role:readonly, clusters, get, *, allow
+    #   p, role:readonly, repositories, get, *, allow
+    #   p, role:readonly, projects, get, *, allow
+    #   g, ${admin_email}, role:admin
     policy.csv: |
       p, role:readonly, applications, get, *, allow
       p, role:readonly, clusters, get, *, allow

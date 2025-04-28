@@ -24,7 +24,7 @@ with open(args.values_file, 'r') as stream:
         print(exc)
 
 # Modify the fields from the dict
-loaded[args.value_key] = args.image_version
+loaded['general'][args.value_key] = args.image_version
 
 # Save the modified values.yaml file
 with open(args.values_file, 'w') as stream:
