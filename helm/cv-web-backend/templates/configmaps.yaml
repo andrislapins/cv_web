@@ -55,6 +55,12 @@ data:
           health:
             enable: false
     spring:
+      jpa:
+        hibernate:
+          ddl-auto: validate
+        properties:
+          hibernate:
+            default_schema: cv_web_schema
       datasource:
         username: ${DB_USERNAME_APP}
         password: ${DB_PASSWORD_APP}
