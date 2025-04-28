@@ -13,6 +13,6 @@ general:
   dbpasswordApp: app_user # pragma: allowlist secret
   dbUsernameFlyway: app_user_flyway
   dbpasswordFlyway: app_user_flyway # pragma: allowlist secret
-  temporalUrl: temporal.cv-web-dev-ns.svc.cluster.local
+  temporalUrl: temporal-frontend.cv-web-dev-ns.svc.cluster.local
   temporalPort: 7233
   appNamespace: cv-web-dev-ns
