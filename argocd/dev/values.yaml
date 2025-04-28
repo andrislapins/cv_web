@@ -1,7 +1,7 @@
 general:
   appNamespace: cv-web-dev-ns
   backendHelmChartVersion: 0.1.4
-  backendImageTag: 2025-04-28-1800-0b409d3
+  backendImageTag: 2025-04-28-2000-c9dd008
   backendIngressURL: cv-web-api-dev.andrefeuille.com
   dbHost: postgresql.cv-web-dev-ns.svc.cluster.local
   dbName: cv_web
