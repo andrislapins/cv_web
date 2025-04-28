@@ -1,20 +1,17 @@
 general:
-  backendHelmChartVersion: 0.0.17
-  frontendHelmChartVersion: 0.0.21
-  backendImageTag:  2025-04-12-1900-4a1c914
-  backendIngressURL: backend-prod.andrefeuille.com
+  frontendHelmChartVersion: 0.1.1
+  backendHelmChartVersion: 0.1.1
   frontendImageTag:  2025-04-12-1900-3c1fcbb
-  frontendIngressURL: frontend-prod.andrefeuille.com
-  certManagerIssuer: "cloudflare-issuer"
-  nginxIpWhitelist: "80.89.77.186/32, 80.89.79.192/32, 95.216.197.156/32 65.109.162.225/32 157.180.30.61/32 172.16.0.101/32 172.16.0.102/32 172.16.0.103/32"
-  cloudflareProxied: "false"
+  frontendIngressURL: cv-web.andrefeuille.com
+  backendImageTag:  2025-04-12-1900-4a1c914
+  backendIngressURL: cv-web-api.andrefeuille.com
   flywayCleanDisabled: "false"
   dbReset: "false"
   dbHost: postgresql.cv-web-prod-ns.svc.cluster.local
   dbName: cv_web
   dbUsernameApp: app_user
-  dbUsernameFlyway: app_user_flyway
   dbpasswordApp: app_user # pragma: allowlist secret
+  dbUsernameFlyway: app_user_flyway
   dbpasswordFlyway: app_user_flyway # pragma: allowlist secret
   temporalUrl: temporal.cv-web-prod-ns.svc.cluster.local
   temporalPort: 7233

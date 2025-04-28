@@ -9,17 +9,22 @@ data "external" "what_is_current_ip" {
 
 data "terraform_remote_state" "network" {
   backend = "local"
-
   config = {
-    path = "../../03_network/terraform.tfstate"
+    path = "../../02_network/terraform.tfstate"
   }
 }
 
 data "terraform_remote_state" "nodes" {
   backend = "local"
-
   config = {
-    path = "../../06_nodes/terraform.tfstate"
+    path = "../../03_nodes/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "istiod" {
+  backend = "local"
+  config = {
+    path = "../../08_kubernetes/07_istiod/terraform.tfstate"
   }
 }
 

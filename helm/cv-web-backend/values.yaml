@@ -1,16 +1,13 @@
 general:
   backendImageTag: latest-dummy
   backendIngressURL: backend-env-dummy.andrefeuille.com
-  certManagerIssuer: "dummy-issuer"
-  nginxIpWhitelist: "172.16.0.101/32, 172.16.0.102/32, 172.16.0.103/32"
-  cloudflareProxied: "false"
   flywayCleanDisabled: "false"
   dbReset: "false"
   dbHost: postgresql.env_ns_dummy.svc.cluster.local
   dbName: cv_web_dummy
   dbUsernameApp: app_user_dummy
-  dbUsernameFlyway: app_user_flyway_dummy
   dbpasswordApp: dummypassword # pragma: allowlist secret
+  dbUsernameFlyway: app_user_flyway_dummy
   dbpasswordFlyway: dummypassword # pragma: allowlist secret
   temporalUrl: temporal.env_ns_dummy.svc.cluster.local
   temporalPort: 7233

@@ -31,3 +31,6 @@ primary:
     logMinDurationStatement: 500
     sessionPreloadLibraries: 'auto_explain'
     sharedPreloadLibraries: 'pg_stat_statements'
+
+metrics:
+  enabled: ${metrics}

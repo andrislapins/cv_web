@@ -104,6 +104,7 @@ cr:
   spec:
     deployment:
       cluster_wide_access: true
+      view_only_mode: true
     auth:
       strategy: ${auth_strategy}
     external_services:

@@ -1,6 +1,6 @@
 stack {
-  name        = "09_workloads/prod"
-  description = "09_workloads/prod"
+  name        = "09_workloads/cv_web_prod"
+  description = "09_workloads/cv_web_prod"
   id          = "bb2493e3-6791-44c8-8473-642b82096bad"
   # after = [
   #   "../../08_components"

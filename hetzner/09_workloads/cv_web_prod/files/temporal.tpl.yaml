@@ -29,23 +29,14 @@ web:
     - name: home-uiserver-config
       emptyDir: {}
   ingress:
-    enabled: true
-    className: ${ingress_class}
-    annotations:
-      cert-manager.io/cluster-issuer: "${cert_manager_issuer}"
-      nginx.ingress.kubernetes.io/whitelist-source-range: "${nginx_ip_whitelist}"
-      external-dns.alpha.kubernetes.io/cloudflare-proxied: "${cloudflare_proxied}"
-      external-dns.alpha.kubernetes.io/access: "public"
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    hosts:
-      - ${subdomain_temporal}.${domain}
-    tls:
-      - hosts:
-          - ${subdomain_temporal}.${domain}
-        secretName: ${subdomain_temporal}-${domain}-tls
+    enabled: false
 
 server:
+  enabled: true
+  metrics:
+    enabled: ${metrics}
+    serviceMonitor:
+      enabled: ${metrics}
   additionalInitContainers:
     - name: 1-wait-postgres
       image: postgres:17-alpine

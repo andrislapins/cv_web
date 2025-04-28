@@ -11,5 +11,6 @@ resource "helm_release" "postgresql" {
     postgres_password = "postgres" # pragma: allowlist secret
     storage_class     = "hcloud-volumes"
     storage_size      = "15Gi"
+    metrics           = "true"
   })]
 }

@@ -11,6 +11,6 @@ resource "helm_release" "redis" {
     redis_password = "redis" # pragma: allowlist secret
     storage_class  = "hcloud-volumes"
     storage_size   = "8Gi"
-    metrics        = "false"
+    metrics        = "true"
   })]
 }

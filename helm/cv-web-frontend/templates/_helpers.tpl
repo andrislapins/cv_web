@@ -1,3 +1,4 @@
+
 {{- define "cv-web-frontend.name" -}}
 cv-web-frontend
 {{- end -}}

@@ -15,13 +15,8 @@ resource "helm_release" "temporal" {
 
   values = [templatefile("${path.module}/files/temporal.tpl.yaml",
     {
-      subdomain_temporal  = "temporal-${var.env}"
-      domain              = "andrefeuille.com"
-      nginx_ip_whitelist  = local.nginx_ip_whitelist
-      ingress_class       = "nginx"
-      cert_manager_issuer = var.cert_manager_issuer
-      cloudflare_proxied  = "false"
-      app_namespace       = local.app_namespace
+      app_namespace = local.app_namespace
+      metrics       = "true"
     }
   )]
 }
