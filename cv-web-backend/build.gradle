@@ -22,3 +22,12 @@ subprojects {
         }
     }
 }
+
+bootJar {
+    enabled = true
+    archiveFileName = 'app.jar'
+}
+
+jar {
+    enabled = false
+}
