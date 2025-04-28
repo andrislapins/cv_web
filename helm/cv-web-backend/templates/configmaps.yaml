@@ -59,7 +59,6 @@ data:
         username: ${DB_USERNAME_APP}
         password: ${DB_PASSWORD_APP}
         url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
-        type: fintech.common.hikari.ExtendedHikariDataSource
         hikari:
           minimum-idle: 1
           maximum-pool-size: 20
