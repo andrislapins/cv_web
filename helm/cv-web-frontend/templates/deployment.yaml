@@ -24,3 +24,10 @@ spec:
           image: "ghcr.io/andrislapins/cv-web-frontend:{{ .Values.general.frontendImageTag }}"
           ports:
             - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 2048Mi
+            limits:
+              cpu: 500m
+              memory: 5120Mi
