@@ -14,14 +14,15 @@ import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.serviceclient.WorkflowServiceStubsOptions;
 import io.temporal.worker.Worker;
 import io.temporal.worker.WorkerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class HelloWorker {
 
-    // @Value("${temporal.target}")
-    // private String temporalTarget;
+    @Value("${spring.temporal.connection.target}")
+    private String temporalTarget;
 
     @PostConstruct
     public void startWorker() {
@@ -31,7 +32,7 @@ public class HelloWorker {
             // Create a stub that accesses a Temporal Service on the local development machine
             WorkflowServiceStubs serviceStub = WorkflowServiceStubs.newServiceStubs(
                 WorkflowServiceStubsOptions.newBuilder()
-                .setTarget("temporal:7233")
+                .setTarget(temporalTarget)
                 .build()
             );
 

@@ -9,6 +9,7 @@ import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.serviceclient.WorkflowServiceStubsOptions;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 
 import com.andrefeuille.cv_web_backend.temporal.hello_workflow.HelloWorkflow;
@@ -19,8 +20,8 @@ import io.temporal.api.enums.v1.WorkflowIdReusePolicy;
 @Slf4j
 public class TemporalHelloController {
 
-    // @Value("${temporal.target}")
-    // private String temporalTarget;
+    @Value("${spring.temporal.connection.target}")
+    private String temporalTarget;
 
     private final WorkflowClient workflowClient;
 
@@ -32,7 +33,7 @@ public class TemporalHelloController {
 
     public TemporalHelloController() {
         WorkflowServiceStubsOptions options = WorkflowServiceStubsOptions.newBuilder()
-            .setTarget("temporal:7233")
+            .setTarget(temporalTarget)
             .build();
         WorkflowServiceStubs serviceStub = WorkflowServiceStubs.newConnectedServiceStubs(options, java.time.Duration.ofSeconds(10));
         this.workflowClient = WorkflowClient.newInstance(serviceStub);
