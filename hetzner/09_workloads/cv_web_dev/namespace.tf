@@ -5,6 +5,7 @@ resource "kubernetes_namespace" "ns" {
     labels = {
       "name"                         = local.app_namespace
       "app.kubernetes.io/managed-by" = "terraform"
+      "istio-injection"              = "disabled"
     }
   }
 }
