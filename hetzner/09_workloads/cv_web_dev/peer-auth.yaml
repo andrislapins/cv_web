@@ -1,0 +1,22 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: allow-plaintext-to-backend
+  namespace: cv-web-dev-ns
+spec:
+  selector:
+    matchLabels:
+      app: cv-web-backend
+  mtls:
+    mode: PERMISSIVE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: cv-web-backend
+  namespace: cv-web-dev-ns
+spec:
+  host: cv-web-backend-dev-cv-web-backend.cv-web-dev-ns.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
