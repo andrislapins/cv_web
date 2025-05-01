@@ -2,7 +2,8 @@ import { Configuration } from '../generated/configuration'
 import { JobControllerApi } from '../generated/apis/job-controller-api'
 import { EducationControllerApi } from '../generated/apis/education-controller-api'
 
-const basePath = ''
+const basePath = '/api'
+
 console.log(`📡 Connecting frontend to backend API at: ${basePath}`)
 const configuration = new Configuration({ basePath })
 
