@@ -12,7 +12,7 @@ general:
   dbpasswordFlyway: app_user_flyway
   flywayCleanDisabled: 'false'
   frontendHelmChartVersion: 0.1.3
-  frontendImageTag: 2025-04-12-1900-3c1fcbb
+  frontendImageTag: 2025-05-01-0900-4ffc27c
   frontendIngressURL: cv-web-dev.andrefeuille.com
   temporalPort: 7233
   temporalUrl: temporal-frontend.cv-web-dev-ns.svc.cluster.local
