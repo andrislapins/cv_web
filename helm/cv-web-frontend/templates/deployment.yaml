@@ -18,6 +18,8 @@ spec:
         name: frontend
         istio: monitor
         sidecar.istio.io/inject: "true"
+      annotations:
+        checksum/config-common: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ include "cv-web-frontend.name" . }}
