@@ -2,3 +2,4 @@ general:
   frontendImageTag: latest-dummy
   frontendIngressURL: frontend-env-dummy.andrefeuille.com
   backendInnerUrl: http://cv-web-backend-dev-cv-web-backend.cv-web-dev-ns.svc.cluster.local:80
+  podsRangeCIDR: 10.233.64.0/18
