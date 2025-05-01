@@ -9,11 +9,11 @@ general:
   dbReset: 'false'
   dbUsernameApp: app_user
   dbUsernameFlyway: app_user_flyway
-  dbpasswordApp: app_user # pragma: allowlist secret
-  dbpasswordFlyway: app_user_flyway # pragma: allowlist secret
+  dbpasswordApp: app_user
+  dbpasswordFlyway: app_user_flyway
   flywayCleanDisabled: 'false'
   frontendHelmChartVersion: 0.1.10
-  frontendImageTag: 2025-05-01-0900-4ffc27c
+  frontendImageTag: 2025-05-01-1400-61cf272
   frontendIngressURL: cv-web-dev.andrefeuille.com
   temporalPort: 7233
   temporalUrl: temporal-frontend.cv-web-dev-ns.svc.cluster.local
