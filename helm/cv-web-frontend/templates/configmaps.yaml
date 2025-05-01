@@ -59,7 +59,7 @@ data:
       listen  [::]:3000;
       server_name  localhost;
       client_max_body_size 50M;
-      access_log /dev/stdout json;
+      access_log /dev/stdout;
 
       location / {
           root /usr/share/nginx/html;
