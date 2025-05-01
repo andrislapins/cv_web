@@ -3,13 +3,14 @@ general:
   backendHelmChartVersion: 0.1.5
   backendImageTag: 2025-04-28-2000-3cfae7a
   backendIngressURL: cv-web-api-dev.andrefeuille.com
+  backendInnerUrl: http://cv-web-backend-dev-cv-web-backend.cv-web-dev-ns.svc.cluster.local:80
   dbHost: postgresql.cv-web-dev-ns.svc.cluster.local
   dbName: cv_web
   dbReset: 'false'
   dbUsernameApp: app_user
   dbUsernameFlyway: app_user_flyway
-  dbpasswordApp: app_user
-  dbpasswordFlyway: app_user_flyway
+  dbpasswordApp: app_user # pragma: allowlist secret
+  dbpasswordFlyway: app_user_flyway # pragma: allowlist secret
   flywayCleanDisabled: 'false'
   frontendHelmChartVersion: 0.1.3
   frontendImageTag: 2025-05-01-0900-4ffc27c
