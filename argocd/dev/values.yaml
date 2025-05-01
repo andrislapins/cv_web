@@ -3,7 +3,7 @@ general:
   backendHelmChartVersion: 0.1.5
   backendImageTag: 2025-04-28-2000-3cfae7a
   backendIngressURL: cv-web-api-dev.andrefeuille.com
-  backendInnerUrl: http://cv-web-backend-dev-cv-web-backend.cv-web-dev-ns.svc.cluster.local:80
+  backendInnerUrl: http://cv-web-backend-dev-cv-web-backend.cv-web-dev-ns.svc.cluster.local:8080
   dbHost: postgresql.cv-web-dev-ns.svc.cluster.local
   dbName: cv_web
   dbReset: 'false'
