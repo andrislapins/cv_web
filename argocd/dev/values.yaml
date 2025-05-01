@@ -12,7 +12,7 @@ general:
   dbpasswordApp: app_user # pragma: allowlist secret
   dbpasswordFlyway: app_user_flyway # pragma: allowlist secret
   flywayCleanDisabled: 'false'
-  frontendHelmChartVersion: 0.1.3
+  frontendHelmChartVersion: 0.1.4
   frontendImageTag: 2025-05-01-0900-4ffc27c
   frontendIngressURL: cv-web-dev.andrefeuille.com
   temporalPort: 7233
