@@ -1,12 +1,29 @@
 ---
 repos:
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.91.0
-    hooks:
-      - id: terraform_fmt
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
         exclude: hetzner/08_kubernetes/15_observability/grafana_dashboards/.*\.json
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.91.0
+    hooks:
+      - id: terraform_fmt
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+        files: ^helm/.*
+      - id: trailing-whitespace
+        files: ^helm/.*
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.25
+    hooks:
+      - id: helmlint
+        files: ^helm/.*
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.14.2
+    hooks:
+      - id: helm-docs
+        files: ^helm/.*/((README\.md\.gotmpl)|(Chart|requirements|values)\.yaml)$
