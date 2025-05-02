@@ -10,7 +10,7 @@ general:
   dbUsernameApp: app_user
   dbUsernameFlyway: app_user_flyway
   flywayCleanDisabled: 'false'
-  frontendHelmChartVersion: 0.1.16
+  frontendHelmChartVersion: 0.1.17
   frontendImageTag: 2025-05-01-1500-d2f8818
   frontendIngressURL: cv-web-dev.andrefeuille.com
   temporalPort: 7233
