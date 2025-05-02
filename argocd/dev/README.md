@@ -9,7 +9,7 @@ A Helm chart for DEV cv-web
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | general.appNamespace | string | `"cv-web-dev-ns"` |  |
-| general.backendHelmChartVersion | string | `"0.1.5"` |  |
+| general.backendHelmChartVersion | string | `"0.1.6"` |  |
 | general.backendImageTag | string | `"2025-04-28-2000-3cfae7a"` |  |
 | general.backendIngressURL | string | `"cv-web-api-dev.andrefeuille.com"` |  |
 | general.backendInnerUrl | string | `"http://cv-web-backend-dev-cv-web-backend:8080/"` |  |
@@ -19,7 +19,7 @@ A Helm chart for DEV cv-web
 | general.dbUsernameApp | string | `"app_user"` |  |
 | general.dbUsernameFlyway | string | `"app_user_flyway"` |  |
 | general.flywayCleanDisabled | string | `"false"` |  |
-| general.frontendHelmChartVersion | string | `"0.1.12"` |  |
+| general.frontendHelmChartVersion | string | `"0.1.14"` |  |
 | general.frontendImageTag | string | `"2025-05-01-1500-d2f8818"` |  |
 | general.frontendIngressURL | string | `"cv-web-dev.andrefeuille.com"` |  |
 | general.temporalPort | int | `7233` |  |
