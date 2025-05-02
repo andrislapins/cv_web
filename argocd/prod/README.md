@@ -17,8 +17,6 @@ A Helm chart for PROD cv-web
 | general.dbReset | string | `"false"` |  |
 | general.dbUsernameApp | string | `"app_user"` |  |
 | general.dbUsernameFlyway | string | `"app_user_flyway"` |  |
-| general.dbpasswordApp | string | `"app_user"` |  |
-| general.dbpasswordFlyway | string | `"app_user_flyway"` |  |
 | general.flywayCleanDisabled | string | `"false"` |  |
 | general.frontendHelmChartVersion | string | `"0.1.3"` |  |
 | general.frontendImageTag | string | `"2025-04-12-1900-3c1fcbb"` |  |

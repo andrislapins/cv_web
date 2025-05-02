@@ -54,19 +54,32 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
 data:
   nginx.conf: |
+    log_format json_logs escape=json '{'
+        '"time_local":"$time_local",'
+        '"remote_addr":"$remote_addr",'
+        '"request":"$request",'
+        '"status":"$status",'
+        '"body_bytes_sent":"$body_bytes_sent",'
+        '"http_referer":"$http_referer",'
+        '"http_user_agent":"$http_user_agent",'
+        '"request_time":"$request_time",'
+        '"upstream_response_time":"$upstream_response_time",'
+        '"upstream_addr":"$upstream_addr",'
+        '"upstream_status":"$upstream_status"'
+    '}';
     server {
       listen       3000;
       listen  [::]:3000;
       server_name  localhost;
       client_max_body_size 50M;
-      access_log /dev/stdout;
+      access_log /dev/stdout json_logs;
       root /usr/share/nginx/html;
 
       # Handle frontend routes
       location / {
           try_files $uri $uri/ /index.html;
       }
-      
+
       # Proxy API requests to the backend service
       location /api/ {
           proxy_pass {{ .Values.general.backendInnerUrl }};

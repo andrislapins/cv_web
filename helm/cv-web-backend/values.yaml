@@ -6,9 +6,7 @@ general:
   dbHost: postgresql.env_ns_dummy.svc.cluster.local
   dbName: cv_web_dummy
   dbUsernameApp: app_user_dummy
-  dbpasswordApp: dummypassword # pragma: allowlist secret
   dbUsernameFlyway: app_user_flyway_dummy
-  dbpasswordFlyway: dummypassword # pragma: allowlist secret
   temporalUrl: temporal.env_ns_dummy.svc.cluster.local
   temporalPort: 7233
   appNamespace: cv-web-env-dummy-ns

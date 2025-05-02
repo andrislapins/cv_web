@@ -39,6 +39,10 @@ resource "helm_release" "vault" {
 #   ]
 # }
 
+###
+###
+###
+
 resource "vault_auth_backend" "userpass" {
   type = "userpass"
 }
@@ -66,4 +70,30 @@ resource "vault_generic_endpoint" "admin_user" {
   "token_policies": ["admin"]
 }
 EOT
+}
+
+###
+###
+###
+
+resource "vault_policy" "read_kv" {
+  name   = "read-kv"
+  policy = <<EOT
+path "kv/data/cv_web_dev/*" {
+  capabilities = ["read"]
+}
+
+path "kv/metadata/cv_web_dev/*" {
+  capabilities = ["list"]
+}
+EOT
+}
+
+resource "vault_kubernetes_auth_backend_role" "external_secrets" {
+  role_name                        = "external-secrets"
+  backend                          = "kubernetes"
+  bound_service_account_names      = ["external-secrets"]
+  bound_service_account_namespaces = ["*"]
+  token_policies                   = ["read-kv"]
+  token_ttl                        = 3600
 }

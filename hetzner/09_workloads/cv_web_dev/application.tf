@@ -4,8 +4,9 @@ resource "kubernetes_manifest" "argocd_application" {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
     metadata = {
-      name      = local.argocd_app_name
-      namespace = "argo-cd"
+      name       = local.argocd_app_name
+      namespace  = "argo-cd"
+      finalizers = ["resources-finalizer.argocd.argoproj.io"]
     }
     spec = {
       project = "default"

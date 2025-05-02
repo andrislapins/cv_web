@@ -15,9 +15,9 @@ primary:
   initdb:
     scripts:
       dbinit.sql: |-
-        CREATE ROLE app_user WITH PASSWORD ${app_user_password} createdb SUPERUSER LOGIN;
-        CREATE ROLE app_user_flyway WITH PASSWORD ${app_user_flyway_password} createdb SUPERUSER LOGIN;
-        CREATE ROLE app_user_temporal WITH PASSWORD ${app_user_temporal_password} createdb SUPERUSER LOGIN;
+        CREATE ROLE app_user WITH PASSWORD '${app_user_password}' createdb SUPERUSER LOGIN;
+        CREATE ROLE app_user_flyway WITH PASSWORD '${app_user_flyway_password}' createdb SUPERUSER LOGIN;
+        CREATE ROLE app_user_temporal WITH PASSWORD '${app_user_temporal_password}' createdb SUPERUSER LOGIN;
         create database cv_web with owner app_user_flyway;
         create database temporal with owner app_user_temporal;
         create database temporal_visibility with owner app_user_temporal;

@@ -33,7 +33,8 @@ output "kube_node_3_ip_public" {
 
 ###
 ### IDs of the nodes
-### 
+###
+
 output "kube_node_1_id" {
   value = hcloud_server.kube_node[0].id
 }

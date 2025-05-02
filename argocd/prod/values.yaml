@@ -10,9 +10,7 @@ general:
   dbHost: postgresql.cv-web-prod-ns.svc.cluster.local
   dbName: cv_web
   dbUsernameApp: app_user
-  dbpasswordApp: app_user # pragma: allowlist secret
   dbUsernameFlyway: app_user_flyway
-  dbpasswordFlyway: app_user_flyway # pragma: allowlist secret
   temporalUrl: temporal-frontend.cv-web-prod-ns.svc.cluster.local
   temporalPort: 7233
   appNamespace: cv-web-prod-ns

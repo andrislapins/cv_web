@@ -16,8 +16,6 @@ A Helm chart for cv-web-backend
 | general.dbReset | string | `"false"` |  |
 | general.dbUsernameApp | string | `"app_user_dummy"` |  |
 | general.dbUsernameFlyway | string | `"app_user_flyway_dummy"` |  |
-| general.dbpasswordApp | string | `"dummypassword"` |  |
-| general.dbpasswordFlyway | string | `"dummypassword"` |  |
 | general.flywayCleanDisabled | string | `"false"` |  |
 | general.temporalPort | int | `7233` |  |
 | general.temporalUrl | string | `"temporal.env_ns_dummy.svc.cluster.local"` |  |

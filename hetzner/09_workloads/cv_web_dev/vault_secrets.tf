@@ -3,7 +3,7 @@ resource "random_password" "postgres_password" {
   length  = 16
   lower   = true
   upper   = true
-  number  = true
+  numeric = true
   special = false
 }
 
@@ -20,7 +20,7 @@ resource "random_password" "app_user_password" {
   length  = 16
   lower   = true
   upper   = true
-  number  = true
+  numeric = true
   special = false
 }
 
@@ -37,7 +37,7 @@ resource "random_password" "app_user_flyway_password" {
   length  = 16
   lower   = true
   upper   = true
-  number  = true
+  numeric = true
   special = false
 }
 
@@ -54,7 +54,7 @@ resource "random_password" "app_user_temporal_password" {
   length  = 16
   lower   = true
   upper   = true
-  number  = true
+  numeric = true
   special = false
 }
 
