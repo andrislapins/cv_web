@@ -1,5 +1,7 @@
 general:
+  # The image tag for the frontend
   frontendImageTag: latest-dummy
+  # Domain name for the frontend app
   frontendIngressURL: frontend-env-dummy.andrefeuille.com
+  # The URL the frontend will use to reach the backend
   backendInnerUrl: http://cv-web-backend-dev-cv-web-backend.cv-web-dev-ns.svc.cluster.local:80
-  podsRangeCIDR: 10.233.64.0/18

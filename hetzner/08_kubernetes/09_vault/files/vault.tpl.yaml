@@ -1,0 +1,17 @@
+server:
+  service:
+    enabled: true
+    type: ClusterIP
+  dataStorage:
+    enabled: true
+    storageClass: "${storage_class}"
+    size: 5Gi
+  auditStorage:
+    enabled: true
+    storageClass: "${storage_class}"
+    size: 5Gi
+  ha:
+    enabled: false
+
+ui:
+  enabled: true

@@ -27,9 +27,6 @@ spec:
           image: "ghcr.io/andrislapins/cv-web-frontend:{{ .Values.general.frontendImageTag }}"
           ports:
             - containerPort: 3000
-          env:
-            - name: BACKEND_URL
-              value: {{ .Values.general.backendInnerUrl | quote }}
           resources:
             requests:
               cpu: 100m

@@ -44,6 +44,9 @@ resource "helm_release" "grafana" {
     kubernetes_config_map.grafana_dashboard_kubernetes_views_global,
     kubernetes_config_map.grafana_dashboard_kubernetes_views_nodes,
     kubernetes_config_map.grafana_dashboard_kubernetes_views_namespaces,
-    kubernetes_config_map.grafana_dashboard_kubernetes_views_pods
+    kubernetes_config_map.grafana_dashboard_kubernetes_views_pods,
+    kubernetes_config_map.grafana_dashboard_istio_control_plane,
+    kubernetes_config_map.grafana_dashboard_istio_mesh,
+    kubernetes_config_map.grafana_dashboard_istio_workload
   ]
 }

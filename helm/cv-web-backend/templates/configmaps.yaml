@@ -12,8 +12,6 @@ data:
   DB_NAME: "{{ .Values.general.dbName }}"
   DB_USERNAME_APP: "{{ .Values.general.dbUsernameApp }}"
   DB_USERNAME_FLYWAY: "{{ .Values.general.dbUsernameFlyway }}"
-  DB_PASSWORD_APP: "{{ .Values.general.dbpasswordApp }}"
-  DB_PASSWORD_FLYWAY: "{{ .Values.general.dbpasswordFlyway }}"
 ---
 apiVersion: v1
 kind: ConfigMap

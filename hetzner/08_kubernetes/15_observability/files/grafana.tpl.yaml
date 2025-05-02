@@ -146,13 +146,13 @@ dashboardProviders:
           path: /var/lib/grafana/dashboards/istioworkload"
 
 dashboardsConfigMaps:
-    kubernetesviewsglobal: "grafana-dashboard-kubernetes-views-global"
-    kubernetesviewsnodes: "grafana-dashboard-kubernetes-views-nodes"
-    kubernetesviewsnamespaces: "grafana-dashboard-kubernetes-views-namespaces"
-    kubernetesviewspods: "grafana-dashboard-kubernetes-views-pods"
-    istiocontrolplane: "grafana-dashboard-istio-control-plane"
-    istiomesh: "grafana-dashboard-istio-mesh"
-    istioworkload: "grafana-dashboard-istio-workload"
+  kubernetesviewsglobal: "grafana-dashboard-kubernetes-views-global"
+  kubernetesviewsnodes: "grafana-dashboard-kubernetes-views-nodes"
+  kubernetesviewsnamespaces: "grafana-dashboard-kubernetes-views-namespaces"
+  kubernetesviewspods: "grafana-dashboard-kubernetes-views-pods"
+  istiocontrolplane: "grafana-dashboard-istio-control-plane"
+  istiomesh: "grafana-dashboard-istio-mesh"
+  istioworkload: "grafana-dashboard-istio-workload"
 
 grafana.ini:
   paths:

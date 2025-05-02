@@ -9,3 +9,7 @@ istio/
 
 .env
 TODO.txt
+
+hetzner/08_kubernetes/09_vault/*.json
+hetzner/08_kubernetes/10_external_secrets/*.crt
+hetzner/08_kubernetes/10_external_secrets/*.jwt

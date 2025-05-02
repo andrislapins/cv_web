@@ -1,0 +1,21 @@
+auth:
+  rootUser: "${minio_access_key}"
+  rootPassword: "${minio_secret_key}"
+
+persistence:
+  enabled: true
+  storageClass: "${storage_class}"
+  size: 10Gi
+
+service:
+  type: ClusterIP
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 500m
+  limits:
+    memory: 1Gi
+    cpu: 1
+
+mode: standalone

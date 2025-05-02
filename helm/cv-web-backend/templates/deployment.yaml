@@ -51,11 +51,18 @@ spec:
                 name: "{{ include "cv-web-backend.fullname" . }}-db-config"
             - configMapRef:
                 name: "{{ include "cv-web-backend.fullname" . }}-temporal-config"
+            - secretRef:
+                name: "{{ include "cv-web-backend.name" . }}-secrets"
           startupProbe:
             tcpSocket:
               port: 8080
             failureThreshold: 120
             periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            failureThreshold: 10
           livenessProbe:
             httpGet:
               path: /api/v1/jobs
@@ -63,12 +70,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 15
-            failureThreshold: 2
-          readinessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 5
-            failureThreshold: 10
+            failureThreshold: 3
           resources:
             requests:
               cpu: 100m
