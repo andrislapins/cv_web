@@ -1,16 +1,15 @@
-
-# resource "kubernetes_manifest" "istio_gateway_ip_whitelist" {
+# resource "kubernetes_manifest" "ip_whitelist_policy" {
 #   manifest = {
 #     apiVersion = "security.istio.io/v1beta1"
 #     kind       = "AuthorizationPolicy"
 #     metadata = {
-#       name      = "allow-only-whitelist"
-#       namespace = "istio-system"
+#       name      = "ip-whitelist-policy"
+#       namespace = "grafana"
 #     }
 #     spec = {
 #       selector = {
 #         matchLabels = {
-#           "gateway.networking.k8s.io/gateway-name" = "istio-gateway"
+#           "app.kubernetes.io/name": "grafana"
 #         }
 #       }
 #       action = "ALLOW"
@@ -20,7 +19,8 @@
 #             {
 #               source = {
 #                 ipBlocks = [
-#                   "${data.external.what_is_current_ip.result["internet_ip"]}"
+#                   "80.89.73.56/32",
+#                   "10.233.65.147/32"
 #                 ]
 #               }
 #             }

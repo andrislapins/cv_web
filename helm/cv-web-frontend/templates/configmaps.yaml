@@ -75,6 +75,8 @@ data:
       client_max_body_size 50M;
       access_log /dev/stdout json_logs;
       root /usr/share/nginx/html;
+      real_ip_header X-Forwarded-For;
+      set_real_ip_from 0.0.0.0/0; # or the range of your K8s Node IPs
 
       # Handle frontend routes
       location / {

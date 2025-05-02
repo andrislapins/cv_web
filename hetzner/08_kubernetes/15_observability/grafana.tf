@@ -6,6 +6,7 @@ resource "kubernetes_namespace" "grafana" {
     labels = {
       "name"                         = "grafana"
       "app.kubernetes.io/managed-by" = "terraform"
+      "istio-injection"              = "enabled"
     }
   }
 }

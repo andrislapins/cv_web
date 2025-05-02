@@ -23,3 +23,5 @@ resource "helm_release" "istiod" {
     })
   ]
 }
+
+# kubectl patch svc istio-gateway-istio -n istio-system   -p '{"spec": {"externalTrafficPolicy": "Local"}}'

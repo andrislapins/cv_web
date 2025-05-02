@@ -1,0 +1,21 @@
+{
+  "namespace": "istio-system",
+  "name": "istio-gateway-istio",
+  "ports": [
+    {
+      "port": 15021,
+      "nodePort": 30326,
+      "protocol": "TCP"
+    },
+    {
+      "port": 80,
+      "nodePort": 32489,
+      "protocol": "TCP"
+    },
+    {
+      "port": 443,
+      "nodePort": 32066,
+      "protocol": "TCP"
+    }
+  ]
+}

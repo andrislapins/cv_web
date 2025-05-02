@@ -19,7 +19,7 @@ A Helm chart for DEV cv-web
 | general.dbUsernameApp | string | `"app_user"` |  |
 | general.dbUsernameFlyway | string | `"app_user_flyway"` |  |
 | general.flywayCleanDisabled | string | `"false"` |  |
-| general.frontendHelmChartVersion | string | `"0.1.14"` |  |
+| general.frontendHelmChartVersion | string | `"0.1.16"` |  |
 | general.frontendImageTag | string | `"2025-05-01-1500-d2f8818"` |  |
 | general.frontendIngressURL | string | `"cv-web-dev.andrefeuille.com"` |  |
 | general.temporalPort | int | `7233` |  |

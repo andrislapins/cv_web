@@ -2,3 +2,11 @@
 pilot:
   env:
     PILOT_ENABLE_GATEWAY_API: ${pilot_gw_api}
+    PROXY_PROTOCOL: "True"
+
+meshConfig:
+  accessLogFile: /dev/stdout
+  accessLogEncoding: JSON
+  defaultConfig:
+    proxyMetadata:
+      PROXY_PROTOCOL: "true"
