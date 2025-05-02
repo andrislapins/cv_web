@@ -7,7 +7,8 @@ resource "kubernetes_manifest" "istio_gateway" {
       name      = "istio-gateway"
       namespace = "istio-system"
       annotations = {
-        "networking.istio.io/service-type" = "NodePort"
+        "networking.istio.io/service-type"                 = "NodePort"
+        "traffic.sidecar.istio.io/excludeOutboundIPRanges" = "0.0.0.0/0"
       }
     }
     spec = {
