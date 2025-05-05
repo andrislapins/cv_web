@@ -10,3 +10,5 @@ meshConfig:
   defaultConfig:
     proxyMetadata:
       PROXY_PROTOCOL: "true"
+    gatewayTopology:
+      numTrustedProxies: 1

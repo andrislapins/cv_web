@@ -1,5 +1,5 @@
 
-resource "cloudflare_dns_record" "vpn_server" {
+resource "cloudflare_dns_record" "vpn" {
   type    = "A"
   name    = "vpn.andrefeuille.com"
   content = hcloud_server.vpn_server.ipv4_address

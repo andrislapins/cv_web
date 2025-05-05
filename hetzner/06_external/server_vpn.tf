@@ -11,6 +11,6 @@ resource "hcloud_server" "vpn_server" {
   }
   network {
     network_id = data.terraform_remote_state.network.outputs.kube_private_network_id
-    ip         = "172.16.0.110"
+    ip         = "172.16.0.118"
   }
 }
