@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: minio-access-policy
+  namespace: minio
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: minio
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        remoteIpBlocks: ["135.181.39.124/32"]

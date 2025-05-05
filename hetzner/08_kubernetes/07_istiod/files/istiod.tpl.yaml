@@ -7,8 +7,10 @@ pilot:
 meshConfig:
   accessLogFile: /dev/stdout
   accessLogEncoding: JSON
+  # https://istio.io/latest/docs/tasks/security/authorization/authz-ingress/
   defaultConfig:
     proxyMetadata:
       PROXY_PROTOCOL: "true"
     gatewayTopology:
       numTrustedProxies: 1
+      proxyProtocol: {}

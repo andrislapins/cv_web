@@ -5,6 +5,7 @@ resource "kubernetes_namespace" "minio" {
     labels = {
       "name"                         = "minio"
       "app.kubernetes.io/managed-by" = "terraform"
+      "istio-injection"              = "enabled"
     }
   }
 }
