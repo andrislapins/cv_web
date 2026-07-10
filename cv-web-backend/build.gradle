@@ -34,7 +34,7 @@ dependencyManagement {
 
 ext {
     set('springBootVersion', '3.4.4')
-    set('postgresVersion', '42.7.3')
+    set('postgresVersion', '42.7.13')
     set('flywayVersion', '11.4.0')
     set('lombokVersion', '1.18.30')
 }
