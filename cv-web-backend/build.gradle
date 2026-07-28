@@ -53,7 +53,7 @@ dependencies {
     // Flyway (Core + PostgreSQL DB support)
     implementation "org.flywaydb:flyway-core:${flywayVersion}"
     implementation "org.flywaydb:flyway-database-postgresql:${flywayVersion}"
-    implementation "org.hibernate.validator:hibernate-validator:8.0.0.Final"
+    implementation "org.hibernate.validator:hibernate-validator:8.0.5.Final"
 
     // Lombok
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
